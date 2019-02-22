@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+      <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        >
+
+
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#fafafa"
+    android:elevation="8dp"
+    android:layout_marginBottom="8dp"
+
+
+
+
+    >
+
+    <LinearLayout
+        android:id="@+id/L1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+
+      >
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="Location"
+
+
+            android:textSize="10sp"
+            app:icon="@drawable/ic_location" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/L2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+
+
+       >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_categories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="Categories"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+
+
+
+            android:textSize="10sp"
+            app:icon="@drawable/ic_local_offer_black_24dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/L3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:padding="5dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+
+            android:textSize="8sp"
+            app:icon="@drawable/ic_tune" />
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+        <!--<include layout="@layout/favorites"/>-->
+        <include layout="@layout/lands_list"/>
+        <include layout="@layout/lands_list"/>
+        <include layout="@layout/lands_list"/>
+        <include layout="@layout/lands_list"/>
+        <include layout="@layout/lands_list"/>
+        <include layout="@layout/lands_list"/>
+        <include layout="@layout/lands_list"/>
+
+
+
+
+      </LinearLayout>
+
+
+
+</androidx.core.widget.NestedScrollView>
+
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    android:id="@+id/fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    android:layout_marginBottom="60dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:elevation="12dp"
+    android:src="@drawable/ic_add"
+    app:backgroundTint="@color/authui_colorAccent"
+    app:fabSize="normal"
+    style="@style/Widget.MaterialComponents.FloatingActionButton"
+    app:srcCompat="@drawable/ic_add" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="3dp">
+
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#eeeeee">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/llimage"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/house"
+                android:scaleType="centerCrop"
+                />
+
+                <TextView
+                    android:id="@+id/code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/llimage"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_toRightOf="@+id/llimage"
+                    android:fontFamily="@font/open_sans"
+                    android:text="A345524323432" />
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="West Land"
+                   android:layout_below="@+id/code"
+                    android:layout_toRightOf="@+id/llimage"
+                    android:layout_margin="8dp"
+                    android:layout_centerVertical="true"
+
+                    />
+
+              <TextView
+                android:id="@+id/owner_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Owned By Mike Ross"
+                android:layout_below="@+id/location"
+                android:layout_toRightOf="@+id/llimage"
+                android:layout_margin="8dp"
+                android:layout_centerVertical="true"
+
+                />
+
+
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                        android:layout_width="50dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:text="Hide"
+                        android:textAlignment="center"
+                        android:textSize="8sp"
+                        />
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+
+                    android:layout_toRightOf="@+id/llimage"
+                    android:background="@null"
+                    android:layout_alignBottom="@+id/llimage"
+                    android:layout_marginLeft="3dp"
+                    app:icon="@drawable/ic_favorite"
+                    android:text="Add to favorites"
+                    android:textAlignment="center"
+                    android:textSize="8sp"
+                        />
+
+
+
+
+                <ImageView
+                    android:id="@+id/call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/llimage"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                   android:src="@drawable/ic_call"
+                    android:textSize="10dp" />
+
+
+                <TextView
+                    android:id="@+id/dimensions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="90 X 90"
+                  android:layout_below="@+id/owner_name"
+                    android:layout_toRightOf="@+id/llimage"
+                 android:layout_margin="8dp"
+
+
+                    />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+
+
+
+
+</com.google.android.material.card.MaterialCardView>

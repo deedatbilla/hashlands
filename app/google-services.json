@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "51122920462",
+    "firebase_url": "https://land-4a99b.firebaseio.com",
+    "project_id": "land-4a99b",
+    "storage_bucket": "land-4a99b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51122920462:android:513a9344b8706b7a",
+        "android_client_info": {
+          "package_name": "com.deedat.landsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51122920462-qlpte56evuca5589tobo287m7iic2jfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMTEWmA6XS3QU8j7bBCxxvulRmkREQL3s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
