@@ -142,6 +142,9 @@ public class MainActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         TextView navemail = (TextView) headerView.findViewById(R.id.user_eamil);
         final TextView navUsername = (TextView) headerView.findViewById(R.id.username);
+        final TextView profileInitials = (TextView) headerView.findViewById(R.id.initials);
+
+
         navemail.setText(email);
 
         ref.child(uid).addValueEventListener(new ValueEventListener() {
@@ -149,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 navUsername.setText(user.fullname);
+                profileInitials.setText(getShortName(user.fullname));
             }
 
             @Override
@@ -248,7 +252,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    public static String getShortName(String name) {
+        String[] strings = name.split(" ");//no i18n
+        String shortName;
+        if (strings.length == 1) {
+            shortName = strings[0].substring(0, 2);
+        } else {
+            shortName = strings[0].substring(0, 1) + strings[1].substring(0, 1);
+        }
+        return shortName.toUpperCase();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

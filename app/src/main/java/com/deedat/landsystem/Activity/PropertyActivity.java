@@ -52,26 +52,6 @@ Toolbar toolbar;
         //  recyclerView.setItemAnimator(new DefaultItemAnimator());
         // recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(mAdapter);
-        landInfoList.add(new LandInfo("24234","190 X 90","kasoa","deedat"));
-        landInfoList.add(new LandInfo("24234","90 X 90","kasoa","deedat"));
-        landInfoList.add(new LandInfo("23542","90 X 90","kasoa","mike"));
-        landInfoList.add(new LandInfo("23524","190 X 90","kasoa","Mae"));
-        landInfoList.add(new LandInfo("9874","90 X 90","kasoa","Josh"));
-        landInfoList.add(new LandInfo("40943","90 X 90","kasoa","milky"));
-        landInfoList.add(new LandInfo("983454","90 X 90","kasoa","paul"));
-        landInfoList.add(new LandInfo("24234","90 X 90","kasoa","mens"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","aaron"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","nana"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","top"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","kamw"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","idol"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","deedat"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","josh"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","qay"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","yawe"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","max"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","big"));
-        landInfoList.add(new LandInfo("24234","90 X 90","west","late"));
     }
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {

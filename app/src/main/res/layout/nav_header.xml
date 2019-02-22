@@ -18,10 +18,20 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="40dp"
         android:src="@drawable/profile_image"
+        android:visibility="gone"
 
 
         />
+<TextView
+    android:id="@+id/initials"
+    android:layout_width="55dp"
+    android:layout_height="55dp"
+    android:scaleType="centerCrop"
+    android:gravity="center"
 
+    android:background="@drawable/circle"
+    android:textColor="@color/colorPrimaryDark"
+    />
 
     <TextView
         android:id="@+id/username"

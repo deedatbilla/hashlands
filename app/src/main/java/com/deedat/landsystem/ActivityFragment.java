@@ -6,30 +6,40 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.deedat.landsystem.Model.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ActivityFragment extends Fragment {
-
-
+    String url = "https://land-4a99b.firebaseio.com/users.json";
+     TextView mTextView;
     public ActivityFragment() {
         // Required empty public constructor
     }
@@ -45,32 +55,43 @@ public class ActivityFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final TextView mTextView = (TextView) view.findViewById(R.id.text);
+         mTextView = (TextView) view.findViewById(R.id.text);
 // ...
 
-// Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url ="https://land-4a99b.firebaseio.com/users.json";
-
-// Request a string response from the provided URL.
 
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+    }
+
+    private void preparedata() {
+        JsonArrayRequest request = new JsonArrayRequest(url,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                       // mTextView.setText("Response is: "+ response.substring(0,90));
+                    public void onResponse(JSONArray response) {
+                        if (response == null) {
+                            Toast.makeText(getActivity(), "Couldn't fetch the menu! Pleas try again.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        List<User> items = new Gson().fromJson(response.toString(), new TypeToken<List<User>>() {
+                        }.getType());
+                  mTextView.setText(items+"");
+                        // adding items to cart list
+                        //cartList.clear();
+                       // cartList.addAll(items);
+
+                        // refreshing recycler view
+                       // mAdapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //mTextView.setText("That didn't work!");
+                // error in getting json
+                Log.d("Tag", "Error: " + error.getMessage());
+                Toast.makeText(getActivity(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-// Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        MyApplication.getInstance().addToRequestQueue(request);
     }
 }
