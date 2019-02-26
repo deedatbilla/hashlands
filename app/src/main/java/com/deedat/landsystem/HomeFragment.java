@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.util.Property;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 /**
@@ -39,11 +41,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HomeFragment extends androidx.fragment.app.Fragment {
 
     private RecyclerView recyclerView;
-    BottomNavigationView navigation;
     private List<LandInfo> landInfoList;
-    private List<filter> filter_tags;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private land_dets_adapter mAdapter;
-    private FilterAdapter mAdapter2;
+
     ProgressBar progressBar;
     //SwipeRefreshLayout swipeContainer;
     public HomeFragment() {
@@ -63,6 +64,19 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycler_view_vertical);
         progressBar=view.findViewById(R.id.progress_bar);
+        swipeRefreshLayout=view.findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Log.i("LOG_TAG", "onRefresh called from SwipeRefreshLayout");
+
+                        // This method performs the actual data-refresh operation.
+                        // The method calls setRefreshing(false) when it's finished.
+                        //myUpdateOperation();
+                    }
+                }
+        );
        // progressDialog = new ProgressDialog(getActivity());
         //navigation=view.findViewById(R.id.navigationtop);
         //navigation.setVisibility(View.VISIBLE);
@@ -151,20 +165,5 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
 
 
     }
-public void tags(){
-    filter_tags = new ArrayList<>();
-    mAdapter2 = new FilterAdapter(getActivity(), filter_tags);
-     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false);
-      recyclerView.setLayoutManager(mLayoutManager);
-      //recyclerView.setItemAnimator(new DefaultItemAnimator());
-      //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-      recyclerView.setAdapter(mAdapter2);
-      filter_tags.add(new filter("verified"));
-      filter_tags.add(new filter("For sale"));
-      filter_tags.add(new filter("Arround me"));
-      filter_tags.add(new filter("verified"));
-      filter_tags.add(new filter("verified"));
 
-
-}
 }
