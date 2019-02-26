@@ -17,6 +17,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -43,6 +45,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 //import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -50,13 +53,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-public class MainActivity extends AppCompatActivity {
-    ActionBar toolbar;
+public class MainActivity extends AppCompatActivity implements MaterialSearchBar.OnSearchActionListener {
+    Toolbar toolbar;
     Fragment fragment;
     private DrawerLayout mDrawerLayout;
     FirebaseAuth auth;
     TextView userEmail;
     DatabaseReference ref;
+    MaterialSearchBar searchBar;
 
 
     FloatingActionButton floatingActionButton;
@@ -67,27 +71,27 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    toolbar.setTitle("Home");
+                   // toolbar.setTitle("Home");
                     fragment = new HomeFragment();
                     loadFragment(fragment);
 
                     return true;
                 case R.id.navigation_activity:
-                    toolbar.setTitle("Activity");
+                    //toolbar.setTitle("Activity");
                     fragment = new ActivityFragment();
                    loadFragment(fragment);
 
 
                     return true;
                 case R.id.navigation_profile:
-                    toolbar.setTitle("Profile");
+                   // toolbar.setTitle("Profile");
                     fragment = new ProfileFragment();
                     loadFragment(fragment);
 
                     return true;
 
                 case R.id.navigation_fav:
-                    toolbar.setTitle("Favorites");
+                    //toolbar.setTitle("Favorites");
                     fragment = new ActivityFragment();
                     loadFragment(fragment);
 
@@ -105,29 +109,48 @@ public class MainActivity extends AppCompatActivity {
         String email=auth.getCurrentUser().getEmail();
         String uid=auth.getUid();
 
-
+       //toolbar=findViewById(R.id.toolbar);
         //userEmail=(TextView) findViewById(R.id.user_eamil);
         //userEmail.setText(email);
-       navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        toolbar = getSupportActionBar();
+        //setSupportActionBar(toolbar);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-      ref=database.getReference("users");
+       ref=database.getReference("users");
 
       //floatingActionButton=findViewById(R.id.fab);
-       // setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-        actionbar.setTitle(R.string.app_name);
-        //actionbar.setElevation(10f);
-       // toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-           // getWindow().setNavigationBarColor(getResources().getColor(R.color.white));
+//
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setDisplayHomeAsUpEnabled(true);
+//        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+//        actionbar.setTitle(R.string.app_name);
+//        //actionbar.setElevation(10f);
+//       toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
-        }
+        //toolbar.setTitle("Home");
+        searchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
+        searchBar.setOnSearchActionListener(this);
+        searchBar.inflateMenu(R.menu.main_menu);
+        searchBar.setText("Search lands...");
+        Log.d("LOG_TAG", getClass().getSimpleName() + ": text " + searchBar.getText());
+        searchBar.setCardViewElevation(10);
+        searchBar.addTextChangeListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
-        toolbar.setTitle("Home");
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d("LOG_TAG", getClass().getSimpleName() + " text changed " + searchBar.getText());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+        });
         fragment = new HomeFragment();
         loadFragment(fragment);
 
@@ -172,14 +195,14 @@ public class MainActivity extends AppCompatActivity {
 
 
                             case R.id.nav_home:
-                                toolbar.setTitle("Home");
+                                //toolbar.setTitle("Home");
                                 fragment = new HomeFragment();
                                 loadFragment(fragment);
                                 navigation.setSelectedItemId(R.id.navigation_home);
 
                                 return true;
                             case R.id.nav_activity:
-                                toolbar.setTitle("Activity");
+                               // toolbar.setTitle("Activity");
                                 fragment = new ActivityFragment();
                                 loadFragment(fragment);
 
@@ -190,13 +213,13 @@ public class MainActivity extends AppCompatActivity {
 
 
                             case R.id.nav_profile:
-                                toolbar.setTitle("Settings");
+                                //toolbar.setTitle("Settings");
                                 fragment = new ProfileFragment();
                                  loadFragment(fragment);
                                 navigation.setSelectedItemId(R.id.navigation_profile);
                                 return true;
                             case R.id.nav_settings:
-                                toolbar.setTitle("Settings");
+                               // toolbar.setTitle("Settings");
                                 //fragment = new HomeFragment();
                                // loadFragment(fragment);
 
@@ -251,6 +274,21 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     public static String getShortName(String name) {
         String[] strings = name.split(" ");//no i18n
@@ -263,22 +301,7 @@ public class MainActivity extends AppCompatActivity {
         return shortName.toUpperCase();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-        //searchView.setBackgroundColor(getResources().getColor(R.color.white));
 
-
-        return true;
-    }
 
     private void loadFragment(Fragment fragment) {
         // load fragment
@@ -304,4 +327,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onSearchStateChanged(boolean enabled) {
+
     }
+
+    @Override
+    public void onSearchConfirmed(CharSequence text) {
+
+    }
+
+    @Override
+    public void onButtonClicked(int buttonCode) {
+        switch (buttonCode) {
+            case MaterialSearchBar.BUTTON_NAVIGATION:
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+                break;
+            case MaterialSearchBar.BUTTON_SPEECH:
+                break;
+            case MaterialSearchBar.BUTTON_BACK:
+                searchBar.disableSearch();
+                break;
+        }
+
+    }
+
+
+}

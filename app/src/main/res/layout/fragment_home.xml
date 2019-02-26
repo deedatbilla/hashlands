@@ -7,116 +7,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="67dp"
     tools:context=".HomeFragment">
 
-      <androidx.core.widget.NestedScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
         >
 
-
-
-      <LinearLayout
+         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:orientation="vertical"
           >
-<LinearLayout
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="horizontal"
+                 android:background="#fafafa"
+                 android:elevation="2dp"
+
+
+
+                 >
+
+                 <LinearLayout
+                     android:id="@+id/L1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:padding="5dp"
+
+                     >
+                     <com.google.android.material.button.MaterialButton
+                         android:id="@+id/btn_location"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:background="@null"
+                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                         android:text="Location"
+                         android:textSize="10sp"
+                         app:icon="@drawable/ic_location" />
+                 </LinearLayout>
+
+                 <LinearLayout
+                     android:id="@+id/L2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:padding="5dp"
+                     >
+
+                     <com.google.android.material.button.MaterialButton
+                         android:id="@+id/btn_categories"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:background="@null"
+                         android:text="Categories"
+                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                         android:textSize="10sp"
+                         app:icon="@drawable/ic_local_offer_black_24dp" />
+                 </LinearLayout>
+
+                 <LinearLayout
+                     android:id="@+id/L3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:padding="5dp">
+
+                     <com.google.android.material.button.MaterialButton
+                         android:id="@+id/btn_filter"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:background="@null"
+                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                         android:textSize="8sp"
+                         app:icon="@drawable/ic_tune" />
+                 </LinearLayout>
+
+
+
+             </LinearLayout>
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="#fafafa"
-    android:elevation="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_height="match_parent">
 
-
-
-
-    >
-
-    <LinearLayout
-        android:id="@+id/L1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-
-      >
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="Location"
-
-
-            android:textSize="10sp"
-            app:icon="@drawable/ic_location" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/L2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-
-
-       >
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_categories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:text="Categories"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-
-
-
-            android:textSize="10sp"
-            app:icon="@drawable/ic_local_offer_black_24dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/L3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-
-        android:padding="5dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-
-            android:textSize="8sp"
-            app:icon="@drawable/ic_tune" />
-    </LinearLayout>
-
-
-
-</LinearLayout>
-
-        <!--<include layout="@layout/favorites"/>-->
-        <include layout="@layout/lands_detail_list"/>
-
+             <androidx.recyclerview.widget.RecyclerView
+                 android:layout_below="@+id/more"
+                 android:id="@+id/recycler_view_vertical"
+                 android:layout_width="match_parent"
+                 android:clipToPadding="false"
+                 android:scrollbars="vertical"
+                 android:layout_height="wrap_content"
+                 />
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 
 
       </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 
-</androidx.core.widget.NestedScrollView>
 <ProgressBar
     android:id="@+id/progress_bar"
     android:layout_width="wrap_content"
@@ -125,20 +121,22 @@
     android:visibility="gone"
 
     />
-<com.google.android.material.floatingactionbutton.FloatingActionButton
 
-    android:id="@+id/fab"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom|end"
-    android:layout_marginBottom="60dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:elevation="12dp"
-    android:src="@drawable/ic_add"
-    app:backgroundTint="@color/authui_colorAccent"
-    app:fabSize="normal"
-    style="@style/Widget.MaterialComponents.FloatingActionButton"
-    app:srcCompat="@drawable/ic_add" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="65dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:elevation="12dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/white"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

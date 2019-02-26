@@ -2,16 +2,19 @@ package com.deedat.landsystem;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Property;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.deedat.landsystem.Activity.PropertyActivity;
 import com.deedat.landsystem.Adapter.FilterAdapter;
 import com.deedat.landsystem.Adapter.land_dets_adapter;
 import com.deedat.landsystem.Model.LandInfo;
@@ -133,15 +136,19 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
         //progressDialog.dismiss();
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
-
+        mAdapter.setOnItemClickListener(new land_dets_adapter.onItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent=new Intent(getActivity(), PropertyActivity.class);
+                intent.putExtra("land_data", landInfoList.get(position));
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(mAdapter);
-        landInfoList.add(new LandInfo("24234","190 X 90","kasoa","deedat","https://imartgh.com/wp-content/uploads/2018/08/polo.jpg"));
-        landInfoList.add(new LandInfo("24234","90 X 90","kasoa","deedat","https://imartgh.com/wp-content/uploads/2018/08/polo.jpg"));
-        landInfoList.add(new LandInfo("23542","90 X 90","kasoa","mike","https://imartgh.com/wp-content/uploads/2018/08/polo.jpg"));
-        landInfoList.add(new LandInfo("23524","190 X 90","kasoa","Mae","https://imartgh.com/wp-content/uploads/2018/08/polo.jpg"));
-        landInfoList.add(new LandInfo("9874","90 X 90","kasoa","Josh","https://imartgh.com/wp-content/uploads/2018/08/polo.jpg"));
-        landInfoList.add(new LandInfo("40943","90 X 90","kasoa","milky","https://imartgh.com/wp-content/uploads/2018/08/polo.jpg"));
-        landInfoList.add(new LandInfo("983454","90 X 90","kasoa","paul","https://imartgh.com/wp-content/uploads/2018/08/polo.jpg"));
+        landInfoList.add(new LandInfo("GH-242324334","190 X 90","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
+        landInfoList.add(new LandInfo("GH-977B8284","90 X 90","GR-Achimota","Deedat Idriss Billa","https://horizon-media.s3-eu-west-1.amazonaws.com/s3fs-public/styles/large/public/field/image/Kenyan%20landscape%20cropped%20-%20shutterstock_216892456%20-%20Maciej%20Czekajewski.jpg?itok=7LOkfAm1"));
+        landInfoList.add(new LandInfo("GH-98676763","90 X 90","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
+
 
     }
 public void tags(){

@@ -13,8 +13,8 @@
     <de.hdodenhof.circleimageview.CircleImageView
 
         android:id="@+id/profile_image"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerVertical="true"
         android:layout_marginRight="40dp"
         android:src="@drawable/profile_image"
@@ -24,8 +24,8 @@
         />
 <TextView
     android:id="@+id/initials"
-    android:layout_width="55dp"
-    android:layout_height="55dp"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
     android:scaleType="centerCrop"
     android:gravity="center"
 

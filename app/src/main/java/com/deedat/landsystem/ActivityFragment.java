@@ -31,6 +31,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,7 +39,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class ActivityFragment extends Fragment {
-    String url = "https://land-4a99b.firebaseio.com/users.json";
+    String url = "https://land-4a99b.firebaseio.com/users";
      TextView mTextView;
     public ActivityFragment() {
         // Required empty public constructor
@@ -55,15 +56,20 @@ public class ActivityFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         mTextView = (TextView) view.findViewById(R.id.text);
+        mTextView = (TextView) view.findViewById(R.id.text);
 // ...
 
 
+
+//preparedata();
+// Instantiate the RequestQueue.
 
 
     }
 
     private void preparedata() {
+
+        final ArrayList<User> myAlist=new ArrayList<>();
         JsonArrayRequest request = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -75,7 +81,10 @@ public class ActivityFragment extends Fragment {
 
                         List<User> items = new Gson().fromJson(response.toString(), new TypeToken<List<User>>() {
                         }.getType());
-                  mTextView.setText(items+"");
+                        myAlist.clear();
+                        myAlist.addAll(items);
+                        Log.v("userdata",""+myAlist+"");
+                  //mTextView.setText(myAlist.size());
                         // adding items to cart list
                         //cartList.clear();
                        // cartList.addAll(items);
