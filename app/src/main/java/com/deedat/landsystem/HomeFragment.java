@@ -1,49 +1,56 @@
 package com.deedat.landsystem;
-
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
-import android.util.Property;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.deedat.landsystem.Activity.PropertyActivity;
-import com.deedat.landsystem.Adapter.FilterAdapter;
 import com.deedat.landsystem.Adapter.land_dets_adapter;
 import com.deedat.landsystem.Model.LandInfo;
-import com.deedat.landsystem.Model.filter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.deedat.landsystem.Model.User;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.mancj.materialsearchbar.MaterialSearchBar;
+
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HomeFragment extends androidx.fragment.app.Fragment {
 
     private RecyclerView recyclerView;
+    private DrawerLayout mDrawerLayout;
     private List<LandInfo> landInfoList;
     private SwipeRefreshLayout swipeRefreshLayout;
     private land_dets_adapter mAdapter;
+    private ProgressDialog progressDialog;
+    public MaterialSearchBar searchBar;
+
+
+    private Button fav;
 
     ProgressBar progressBar;
     //SwipeRefreshLayout swipeContainer;
@@ -64,7 +71,45 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycler_view_vertical);
         progressBar=view.findViewById(R.id.progress_bar);
+        fav=view.findViewById(R.id.btn_fav);
         swipeRefreshLayout=view.findViewById(R.id.swipe);
+        progressDialog = new ProgressDialog(getActivity());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("food");
+//        Query query=ref.orderByChild("category").equalTo("heavy food");
+//
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot datas: dataSnapshot.getChildren()){
+//                    String name=datas.child("name").getValue().toString();
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
+
+
+
+
+
+
+
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -83,54 +128,14 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
        // recyclerView = view.findViewById(R.id.recycler_view_tag);
         //  coordinatorLayout = findViewById(R.id.coordinator_layout);
       fetchlands();
+        addToFavorite();
 
        // tags();
 
     }
 
 
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
-        private int spanCount;
-        private int spacing;
-        private boolean includeEdge;
-
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-            this.includeEdge = includeEdge;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
-                }
-                outRect.bottom = spacing; // item bottom
-            } else {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
-                }
-            }
-        }
-    }
-
-    /**
-     * Converting dp to pixel
-     */
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
 
     public void fetchlands(){
 
@@ -162,8 +167,55 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
         landInfoList.add(new LandInfo("GH-242324334","190 X 90","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
         landInfoList.add(new LandInfo("GH-977B8284","90 X 90","GR-Achimota","Deedat Idriss Billa","https://horizon-media.s3-eu-west-1.amazonaws.com/s3fs-public/styles/large/public/field/image/Kenyan%20landscape%20cropped%20-%20shutterstock_216892456%20-%20Maciej%20Czekajewski.jpg?itok=7LOkfAm1"));
         landInfoList.add(new LandInfo("GH-98676763","90 X 90","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
+        landInfoList.add(new LandInfo("GH-98676763","90 X 90","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
+        landInfoList.add(new LandInfo("GH-98676763","90 X 90","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
+        landInfoList.add(new LandInfo("GH-98676763","90 X 90","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
 
 
+    }
+
+    public void addToFavorite(){
+        final DatabaseReference ref= FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+       final String uid=auth.getUid();
+
+        mAdapter.onfavoriteClick(new land_dets_adapter.onfavoriteClickListener() {
+
+            @Override
+
+            public void onfavClick(final int position) {
+                progressDialog.setMessage("Adding to favourites");
+                progressDialog.show();
+                progressDialog.setCanceledOnTouchOutside(false);
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String key = ref.push().getKey();
+
+                            //ref.child(uid).child(key).setValue(landInfoList.get(position).getLandcode());
+                        Map<String, Object> land = new HashMap<>();
+                        land.put("land_code",landInfoList.get(position).getLandcode());
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        childUpdates.put("/favorites/" + uid+"/"+landInfoList.get(position).getLandcode(),land);
+                        ref.updateChildren(childUpdates);
+                        progressDialog.dismiss();
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+    }
+
+    public void showDialogbox(boolean state){
+        progressDialog.setMessage("Adding to favourites");
+        progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(state);
     }
 
 }

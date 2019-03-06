@@ -1,42 +1,26 @@
 package com.deedat.landsystem.Activity;
 
-import android.app.Activity;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.deedat.landsystem.Activity.PropertyActivity;
-import com.deedat.landsystem.ActivityFragment;
 import com.deedat.landsystem.HomeFragment;
 import com.deedat.landsystem.Model.User;
-import com.deedat.landsystem.ProfileFragment;
 import com.deedat.landsystem.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,84 +40,72 @@ import androidx.fragment.app.FragmentTransaction;
 public class MainActivity extends AppCompatActivity implements MaterialSearchBar.OnSearchActionListener {
     Toolbar toolbar;
     Fragment fragment;
-    private DrawerLayout mDrawerLayout;
     FirebaseAuth auth;
     TextView userEmail;
     DatabaseReference ref;
-    MaterialSearchBar searchBar;
-
-
+    public MaterialSearchBar searchBar;
+    private DrawerLayout mDrawerLayout;
+    CoordinatorLayout coordinatorLayout;
     FloatingActionButton floatingActionButton;
-   BottomNavigationView navigation;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                   // toolbar.setTitle("Home");
-                    fragment = new HomeFragment();
-                    loadFragment(fragment);
-
-                    return true;
-                case R.id.navigation_activity:
-                    //toolbar.setTitle("Activity");
-                    fragment = new ActivityFragment();
-                   loadFragment(fragment);
-
-
-                    return true;
-                case R.id.navigation_profile:
-                   // toolbar.setTitle("Profile");
-                    fragment = new ProfileFragment();
-                    loadFragment(fragment);
-
-                    return true;
-
-                case R.id.navigation_fav:
-                    //toolbar.setTitle("Favorites");
-                    fragment = new ActivityFragment();
-                    loadFragment(fragment);
-
-                    return true;
-            }
-            return false;
-        }
-    };
+//    BottomNavigationView navigation;
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.navigation_home:
+//                   // toolbar.setTitle("Home");
+//                    fragment = new HomeFragment();
+//                    loadFragment(fragment);
+//
+//                    return true;
+//                case R.id.navigation_activity:
+//                    //toolbar.setTitle("Activity");
+//                    fragment = new ActivityFragment();
+//                   loadFragment(fragment);
+//
+//
+//                    return true;
+//                case R.id.navigation_profile:
+//                   // toolbar.setTitle("Profile");
+//                    fragment = new ProfileActivity();
+//                    loadFragment(fragment);
+//
+//                    return true;
+//
+//                case R.id.navigation_fav:
+//                    //toolbar.setTitle("Favorites");
+//                    fragment = new ActivityFragment();
+//                    loadFragment(fragment);
+//
+//                    return true;
+//            }
+//            return false;
+//        }
+//    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AppTheme_PopupOverlay);
+
         setContentView(R.layout.activity_main);
         auth = FirebaseAuth.getInstance();
         String email=auth.getCurrentUser().getEmail();
         String uid=auth.getUid();
-
-       //toolbar=findViewById(R.id.toolbar);
-        //userEmail=(TextView) findViewById(R.id.user_eamil);
-        //userEmail.setText(email);
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
-
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        //setSupportActionBar(toolbar);
+        coordinatorLayout=findViewById(R.id.container);
+//        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+//
+//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        //setSupportActionBar(toolbar);
+//        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
+//        layoutParams.setBehavior(new BottomNavigationBehavior());
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
        ref=database.getReference("users");
-
-      //floatingActionButton=findViewById(R.id.fab);
-//
-//        ActionBar actionbar = getSupportActionBar();
-//        actionbar.setDisplayHomeAsUpEnabled(true);
-//        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-//        actionbar.setTitle(R.string.app_name);
-//        //actionbar.setElevation(10f);
-//       toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-
-        //toolbar.setTitle("Home");
         searchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
         searchBar.setOnSearchActionListener(this);
         searchBar.inflateMenu(R.menu.main_menu);
         searchBar.setText("Search lands...");
-        Log.d("LOG_TAG", getClass().getSimpleName() + ": text " + searchBar.getText());
+        Log.d("LOG_TAG", getClass().getSimpleName() + ": text " +  searchBar.getText());
         searchBar.setCardViewElevation(10);
         searchBar.addTextChangeListener(new TextWatcher() {
             @Override
@@ -196,17 +168,17 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
                             case R.id.nav_home:
                                 //toolbar.setTitle("Home");
-                                fragment = new HomeFragment();
-                                loadFragment(fragment);
-                                navigation.setSelectedItemId(R.id.navigation_home);
+                                //fragment = new HomeFragment();
+                                //loadFragment(fragment);
+                               // navigation.setSelectedItemId(R.id.navigation_home);
 
                                 return true;
                             case R.id.nav_activity:
                                // toolbar.setTitle("Activity");
-                                fragment = new ActivityFragment();
-                                loadFragment(fragment);
+                               // fragment = new ActivityFragment();
+                                //loadFragment(fragment);
 
-                                navigation.setSelectedItemId(R.id.navigation_activity);
+                              //  navigation.setSelectedItemId(R.id.navigation_activity);
 
                                 return true;
 
@@ -214,9 +186,9 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
                             case R.id.nav_profile:
                                 //toolbar.setTitle("Settings");
-                                fragment = new ProfileFragment();
-                                 loadFragment(fragment);
-                                navigation.setSelectedItemId(R.id.navigation_profile);
+                                //fragment = new ProfileActivity();
+                                // loadFragment(fragment);
+                               // navigation.setSelectedItemId(R.id.navigation_profile);
                                 return true;
                             case R.id.nav_settings:
                                // toolbar.setTitle("Settings");
@@ -228,6 +200,10 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
                                property();
 
+                                return true;
+
+                            case R.id.nav_fav:
+                                fav();
                                 return true;
                             // Add code here to update the UI based on the item selected
                             // For example, swap UI fragments here
@@ -317,6 +293,11 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     }
     public void property(){
         Intent intent=new Intent(this, PropertyActivity.class);
+        startActivity(intent);
+    }
+
+    public void fav(){
+        Intent intent=new Intent(this, FavouriteActivity.class);
         startActivity(intent);
     }
     private String usernameFromEmail(String email) {

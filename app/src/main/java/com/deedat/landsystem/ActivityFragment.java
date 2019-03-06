@@ -24,9 +24,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.deedat.landsystem.Activity.MainActivity;
 import com.deedat.landsystem.Model.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,8 +41,9 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class ActivityFragment extends Fragment {
-    String url = "https://land-4a99b.firebaseio.com/users";
+    String url = "https://land-4a99b.firebaseio.com/users.json";
      TextView mTextView;
+    MainActivity mainActivity;
     public ActivityFragment() {
         // Required empty public constructor
     }
@@ -57,6 +60,9 @@ public class ActivityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTextView = (TextView) view.findViewById(R.id.text);
+        mainActivity =new MainActivity();
+
+
 // ...
 
 
@@ -84,7 +90,8 @@ public class ActivityFragment extends Fragment {
                         myAlist.clear();
                         myAlist.addAll(items);
                         Log.v("userdata",""+myAlist+"");
-                  //mTextView.setText(myAlist.size());
+
+                    //mTextView.setText(myAlist.size());
                         // adding items to cart list
                         //cartList.clear();
                        // cartList.addAll(items);

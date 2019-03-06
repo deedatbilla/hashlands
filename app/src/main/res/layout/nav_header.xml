@@ -7,6 +7,7 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
+    android:elevation="12dp"
     tools:context=".Activity.MainActivity"
     android:gravity="bottom">
 

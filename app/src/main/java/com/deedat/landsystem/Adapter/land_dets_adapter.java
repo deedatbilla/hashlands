@@ -24,6 +24,12 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
         void onItemClick(int position);
     }
 
+    private  onfavoriteClickListener onfavoriteClick;
+
+    public interface onfavoriteClickListener {
+        void onfavClick(int position);
+    }
+
     private Context context;
     private List<LandInfo> landInfos;
 
@@ -36,12 +42,16 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
         mListener = listener;
     }
 
+    public void onfavoriteClick(onfavoriteClickListener listener) {
+        onfavoriteClick = listener;
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView landcode, dimen, location, owner;
         ImageView call,thumbnail;
         Button btn_fav;
 
-        public MyViewHolder(@NonNull View itemView, final onItemClickListener listener) {
+        public MyViewHolder(@NonNull View itemView, final onItemClickListener listener, final onfavoriteClickListener fav_listener) {
             super(itemView);
            landcode=itemView.findViewById(R.id.code);
            dimen=itemView.findViewById(R.id.dimensions);
@@ -62,6 +72,18 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
                     }
                 }
             });
+
+            btn_fav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (fav_listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                          fav_listener.onfavClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -71,7 +93,7 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.lands_list, parent, false);
 
-        return new MyViewHolder(itemView, mListener);
+        return new MyViewHolder(itemView, mListener,onfavoriteClick);
     }
 
     @Override

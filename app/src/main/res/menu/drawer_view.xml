@@ -12,6 +12,10 @@
             android:icon="@drawable/ic_access_time_black_24dp"
             android:title="Activity" />
         <item
+            android:id="@+id/nav_fav"
+            android:icon="@drawable/ic_heart"
+            android:title="Favorites" />
+        <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person_black_24dp"
             android:title="Profile" />
@@ -24,10 +28,7 @@
             android:icon="@drawable/ic_settings"
             android:title="Settings" />
 
-        <item
-            android:id="@+id/nav_fav"
-            android:icon="@drawable/ic_heart"
-            android:title="Favorites" />
+
     </group>
 
 
