@@ -27,72 +27,72 @@
           android:orientation="vertical"
           >
 
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="horizontal"
-                 android:background="#fafafa"
-                 android:elevation="2dp"
+             <!--<LinearLayout-->
+                 <!--android:layout_width="match_parent"-->
+                 <!--android:layout_height="wrap_content"-->
+                 <!--android:orientation="horizontal"-->
+                 <!--android:background="#fafafa"-->
+                 <!--android:elevation="2dp"-->
 
 
 
-                 >
+                 <!--&gt;-->
 
-                 <LinearLayout
-                     android:id="@+id/L1"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:padding="5dp"
+                 <!--<LinearLayout-->
+                     <!--android:id="@+id/L1"-->
+                     <!--android:layout_width="wrap_content"-->
+                     <!--android:layout_height="wrap_content"-->
+                     <!--android:padding="5dp"-->
 
-                     >
-                     <com.google.android.material.button.MaterialButton
-                         android:id="@+id/btn_location"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:background="@null"
-                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                         android:text="Location"
-                         android:textSize="10sp"
-                         app:icon="@drawable/ic_location" />
-                 </LinearLayout>
+                     <!--&gt;-->
+                     <!--<com.google.android.material.button.MaterialButton-->
+                         <!--android:id="@+id/btn_location"-->
+                         <!--android:layout_width="wrap_content"-->
+                         <!--android:layout_height="wrap_content"-->
+                         <!--android:background="@null"-->
+                         <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+                         <!--android:text="Location"-->
+                         <!--android:textSize="10sp"-->
+                         <!--app:icon="@drawable/ic_location" />-->
+                 <!--</LinearLayout>-->
 
-                 <LinearLayout
-                     android:id="@+id/L2"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:padding="5dp"
-                     >
+                 <!--<LinearLayout-->
+                     <!--android:id="@+id/L2"-->
+                     <!--android:layout_width="wrap_content"-->
+                     <!--android:layout_height="wrap_content"-->
+                     <!--android:padding="5dp"-->
+                     <!--&gt;-->
 
-                     <com.google.android.material.button.MaterialButton
-                         android:id="@+id/btn_categories"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:background="@null"
-                         android:text="Categories"
-                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                         android:textSize="10sp"
-                         app:icon="@drawable/ic_local_offer_black_24dp" />
-                 </LinearLayout>
+                     <!--<com.google.android.material.button.MaterialButton-->
+                         <!--android:id="@+id/btn_categories"-->
+                         <!--android:layout_width="wrap_content"-->
+                         <!--android:layout_height="wrap_content"-->
+                         <!--android:background="@null"-->
+                         <!--android:text="Categories"-->
+                         <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+                         <!--android:textSize="10sp"-->
+                         <!--app:icon="@drawable/ic_local_offer_black_24dp" />-->
+                 <!--</LinearLayout>-->
 
-                 <LinearLayout
-                     android:id="@+id/L3"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:padding="5dp">
+                 <!--<LinearLayout-->
+                     <!--android:id="@+id/L3"-->
+                     <!--android:layout_width="wrap_content"-->
+                     <!--android:layout_height="wrap_content"-->
+                     <!--android:padding="5dp">-->
 
-                     <com.google.android.material.button.MaterialButton
-                         android:id="@+id/btn_filter"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:background="@null"
-                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                         android:textSize="8sp"
-                         app:icon="@drawable/ic_tune" />
-                 </LinearLayout>
+                     <!--<com.google.android.material.button.MaterialButton-->
+                         <!--android:id="@+id/btn_filter"-->
+                         <!--android:layout_width="wrap_content"-->
+                         <!--android:layout_height="wrap_content"-->
+                         <!--android:background="@null"-->
+                         <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+                         <!--android:textSize="8sp"-->
+                         <!--app:icon="@drawable/ic_tune" />-->
+                 <!--</LinearLayout>-->
 
 
 
-             </LinearLayout>
+             <!--</LinearLayout>-->
 
 
 

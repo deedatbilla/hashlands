@@ -7,18 +7,25 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.deedat.landsystem.Adapter.land_dets_adapter;
 import com.deedat.landsystem.HomeFragment;
+import com.deedat.landsystem.Model.LandInfo;
 import com.deedat.landsystem.Model.User;
 import com.deedat.landsystem.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,9 +39,17 @@ import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 //import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 public class MainActivity extends AppCompatActivity implements MaterialSearchBar.OnSearchActionListener {
@@ -46,6 +61,19 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     public MaterialSearchBar searchBar;
     private DrawerLayout mDrawerLayout;
     CoordinatorLayout coordinatorLayout;
+
+    private RecyclerView recyclerView;
+
+    private List<LandInfo> landInfoList;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private land_dets_adapter mAdapter;
+    private ProgressDialog progressDialog;
+
+
+
+    private Button fav;
+
+    ProgressBar progressBar;
     FloatingActionButton floatingActionButton;
 //    BottomNavigationView navigation;
 //    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -85,14 +113,15 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 //    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+ setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
         auth = FirebaseAuth.getInstance();
-        String email=auth.getCurrentUser().getEmail();
-        String uid=auth.getUid();
-        coordinatorLayout=findViewById(R.id.container);
+        String email = auth.getCurrentUser().getEmail();
+        String uid = auth.getUid();
+       // coordinatorLayout = findViewById(R.id.container);
+
 //        navigation = (BottomNavigationView) findViewById(R.id.navigation);
 //
 //        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -100,12 +129,12 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 //        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
 //        layoutParams.setBehavior(new BottomNavigationBehavior());
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-       ref=database.getReference("users");
+        ref = database.getReference("users");
         searchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
         searchBar.setOnSearchActionListener(this);
         searchBar.inflateMenu(R.menu.main_menu);
         searchBar.setText("Search lands...");
-        Log.d("LOG_TAG", getClass().getSimpleName() + ": text " +  searchBar.getText());
+        Log.d("LOG_TAG", getClass().getSimpleName() + ": text " + searchBar.getText());
         searchBar.setCardViewElevation(10);
         searchBar.addTextChangeListener(new TextWatcher() {
             @Override
@@ -123,12 +152,24 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
             }
 
         });
-        fragment = new HomeFragment();
-        loadFragment(fragment);
+        recyclerView = findViewById(R.id.recycler_view_vertical);
+        progressBar = findViewById(R.id.progress_bar);
+        fav = findViewById(R.id.btn_fav);
+        swipeRefreshLayout = findViewById(R.id.swipe);
+        progressDialog = new ProgressDialog(this);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Log.i("LOG_TAG", "onRefresh called from SwipeRefreshLayout");
 
-       // floatingActionButton.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#fff")));
-
-
+                        // This method performs the actual data-refresh operation.
+                        // The method calls setRefreshing(false) when it's finished.
+                        //myUpdateOperation();
+                    }
+                }
+        );
+        // floatingActionButton.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#fff")));
 
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -170,35 +211,34 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
                                 //toolbar.setTitle("Home");
                                 //fragment = new HomeFragment();
                                 //loadFragment(fragment);
-                               // navigation.setSelectedItemId(R.id.navigation_home);
+                                // navigation.setSelectedItemId(R.id.navigation_home);
 
                                 return true;
                             case R.id.nav_activity:
-                               // toolbar.setTitle("Activity");
-                               // fragment = new ActivityFragment();
+                                // toolbar.setTitle("Activity");
+                                // fragment = new ActivityFragment();
                                 //loadFragment(fragment);
 
-                              //  navigation.setSelectedItemId(R.id.navigation_activity);
+                                //  navigation.setSelectedItemId(R.id.navigation_activity);
 
                                 return true;
-
 
 
                             case R.id.nav_profile:
                                 //toolbar.setTitle("Settings");
                                 //fragment = new ProfileActivity();
                                 // loadFragment(fragment);
-                               // navigation.setSelectedItemId(R.id.navigation_profile);
+                                // navigation.setSelectedItemId(R.id.navigation_profile);
                                 return true;
                             case R.id.nav_settings:
-                               // toolbar.setTitle("Settings");
+                                // toolbar.setTitle("Settings");
                                 //fragment = new HomeFragment();
-                               // loadFragment(fragment);
+                                // loadFragment(fragment);
 
                                 return true;
                             case R.id.nav_properties:
 
-                               property();
+                                property();
 
                                 return true;
 
@@ -208,37 +248,14 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
                             // Add code here to update the UI based on the item selected
                             // For example, swap UI fragments here
                         }
-                            return true;
+                        return true;
 
                     }
                 });
+        fetchlands();
+        addToFavorite();
 
-        mDrawerLayout.addDrawerListener(
-                new DrawerLayout.DrawerListener() {
-                    @Override
-                    public void onDrawerSlide(View drawerView, float slideOffset) {
-                        // Respond when the drawer's position changes
-                    }
-
-                    @Override
-                    public void onDrawerOpened(View drawerView) {
-                        // Respond when the drawer is opened
-
-                    }
-
-                    @Override
-                    public void onDrawerClosed(View drawerView) {
-                        // Respond when the drawer is closed
-                    }
-
-                    @Override
-                    public void onDrawerStateChanged(int newState) {
-                        // Respond when the drawer motion state changes
-                    }
-                }
-        );
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -297,8 +314,12 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     }
 
     public void fav(){
+       // Pair[] pair=new Pair[2];
+        //pair[1]=new Pair<View,String>(searchBar,"search");
+        ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(this);
         Intent intent=new Intent(this, FavouriteActivity.class);
-        startActivity(intent);
+
+        startActivity(intent,options.toBundle());
     }
     private String usernameFromEmail(String email) {
         if (email.contains("@")) {
@@ -332,6 +353,110 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         }
 
     }
+    public void fetchlands(){
 
+        landInfoList = new ArrayList<>();
+        mAdapter = new land_dets_adapter(this, landInfoList);
+
+        //  RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        //  recyclerView.setLayoutManager(mLayoutManager);
+        // recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(8), true));
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
+        //progressDialog.setTitle("LogIn");
+
+
+        mAdapter.notifyDataSetChanged();
+        //progressDialog.dismiss();
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        mAdapter.setOnItemClickListener(new land_dets_adapter.onItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+                Intent intent=new Intent(MainActivity.this, LandInfoActivity.class);
+                intent.putExtra("land_data", landInfoList.get(position));
+                startActivity(intent,options.toBundle());
+            }
+        });
+        recyclerView.setAdapter(mAdapter);
+        landInfoList.add(new LandInfo("GH-242324334","1200 by 800 sq.ft","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
+        landInfoList.add(new LandInfo("GH-977B8284","1320 by 300 sq.ft","GR-Achimota","Deedat Idriss Billa","https://horizon-media.s3-eu-west-1.amazonaws.com/s3fs-public/styles/large/public/field/image/Kenyan%20landscape%20cropped%20-%20shutterstock_216892456%20-%20Maciej%20Czekajewski.jpg?itok=7LOkfAm1"));
+        landInfoList.add(new LandInfo("GH-98676763","1100 by 800 sq.ft","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
+        landInfoList.add(new LandInfo("GH-242324334","1200 by 800 sq.ft","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
+        landInfoList.add(new LandInfo("GH-977B8284","1320 by 300 sq.ft","GR-Achimota","Deedat Idriss Billa","https://horizon-media.s3-eu-west-1.amazonaws.com/s3fs-public/styles/large/public/field/image/Kenyan%20landscape%20cropped%20-%20shutterstock_216892456%20-%20Maciej%20Czekajewski.jpg?itok=7LOkfAm1"));
+        landInfoList.add(new LandInfo("GH-98676763","1100 by 800 sq.ft","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
+
+
+        //landInfoList.add(new LandInfo("GH-32543232","90 X 90","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
+
+    }
+
+    public void addToFavorite(){
+        final DatabaseReference ref= FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        final String uid=auth.getUid();
+
+        mAdapter.onfavoriteClick(new land_dets_adapter.onfavoriteClickListener() {
+
+            @Override
+
+            public void onfavClick(final int position) {
+                progressDialog.setMessage("please wait");
+                progressDialog.show();
+                progressDialog.setCanceledOnTouchOutside(false);
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String key = ref.push().getKey();
+                     if(!dataSnapshot.child("favorites").child(uid).child(landInfoList.get(position).getLandcode()).exists()){
+                         Map<String, Boolean> land = new HashMap<>();
+                         land.put("favorited",true);
+                         Map<String, Object> childUpdates = new HashMap<>();
+                         childUpdates.put("/favorites/" + uid+"/"+landInfoList.get(position).getLandcode(),land);
+                         ref.updateChildren(childUpdates);
+                         progressDialog.dismiss();
+                         mAdapter.clicked=true;
+
+                            }
+
+                       String favorites =dataSnapshot.child("favorites").child(uid).child(landInfoList.get(position).getLandcode()).getValue().toString();
+                      // Log.v("testingv",test);
+                        if(favorites.contains("true")){
+
+                            Map<String, Boolean> land = new HashMap<>();
+                            land.put("favorited",false);
+                            Map<String, Object> childUpdates = new HashMap<>();
+                            childUpdates.put("/favorites/" + uid+"/"+landInfoList.get(position).getLandcode(),land);
+                            ref.updateChildren(childUpdates);
+                            progressDialog.dismiss();
+                            mAdapter.clicked=false;
+
+                        }
+                        else {
+
+                            Map<String, Boolean> land = new HashMap<>();
+                            land.put("favorited",true);
+                            Map<String, Object> childUpdates = new HashMap<>();
+                            childUpdates.put("/favorites/" + uid+"/"+landInfoList.get(position).getLandcode(),land);
+                            ref.updateChildren(childUpdates);
+                            progressDialog.dismiss();
+                            mAdapter.clicked=true;
+                        }
+                        //ref.child(uid).child(key).setValue(landInfoList.get(position).getLandcode());
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+    }
 
 }

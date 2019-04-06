@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/container"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,14 +17,125 @@
             android:background="@color/colorPrimary">
 
         </RelativeLayout>
-        <com.mancj.materialsearchbar.MaterialSearchBar
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="70dp"
+            >
+            <!--<androidx.core.widget.NestedScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!---->
+
+            <!--&gt;  app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical"-->
+            <!--&gt;-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:background="#fafafa"-->
+            <!--android:elevation="2dp"-->
+
+
+
+            <!--&gt;-->
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/L1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="5dp"-->
+
+            <!--&gt;-->
+            <!--<com.google.android.material.button.MaterialButton-->
+            <!--android:id="@+id/btn_location"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@null"-->
+            <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+            <!--android:text="Location"-->
+            <!--android:textSize="10sp"-->
+            <!--app:icon="@drawable/ic_location" />-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/L2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="5dp"-->
+            <!--&gt;-->
+
+            <!--<com.google.android.material.button.MaterialButton-->
+            <!--android:id="@+id/btn_categories"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@null"-->
+            <!--android:text="Categories"-->
+            <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+            <!--android:textSize="10sp"-->
+            <!--app:icon="@drawable/ic_local_offer_black_24dp" />-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/L3"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="5dp">-->
+
+            <!--<com.google.android.material.button.MaterialButton-->
+            <!--android:id="@+id/btn_filter"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@null"-->
+            <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+            <!--android:textSize="8sp"-->
+            <!--app:icon="@drawable/ic_tune" />-->
+            <!--</LinearLayout>-->
+
+
+
+            <!--</LinearLayout>-->
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@+id/more"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:id="@+id/recycler_view_vertical"
+                android:layout_width="match_parent"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                android:layout_height="wrap_content"
+                />
+
+
+
+
+
+            <!--</LinearLayout>-->
+            <!--</androidx.core.widget.NestedScrollView>-->
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </FrameLayout>
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
             android:id="@+id/searchBar"
             style="@style/MaterialSearchBarLight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             app:mt_navIconEnabled="true"
-
             app:mt_placeholder="Hash Lands" />
         <!--<com.google.android.material.bottomnavigation.BottomNavigationView-->
             <!--android:id="@+id/navigation"-->
@@ -42,6 +149,20 @@
             <!--app:itemHorizontalTranslationEnabled="false"-->
             <!--app:labelVisibilityMode="labeled"-->
             <!--app:menu="@menu/navigation" />-->
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+
+        />
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

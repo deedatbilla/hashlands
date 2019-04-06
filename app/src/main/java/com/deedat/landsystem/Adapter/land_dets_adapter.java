@@ -1,12 +1,15 @@
 package com.deedat.landsystem.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.deedat.landsystem.Model.LandInfo;
@@ -15,11 +18,12 @@ import com.deedat.landsystem.R;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.MyViewHolder> {
     private onItemClickListener mListener;
-
+    public boolean clicked;
     public interface onItemClickListener {
         void onItemClick(int position);
     }
@@ -74,8 +78,17 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
             });
 
             btn_fav.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(View v) {
+                    if (clicked){
+                        //btn_fav.setBackgroundColor(Color.red(200));
+                        btn_fav.setText("add to favorites");
+                    }
+                    else {
+                        //btn_fav.setBackgroundColor(Col);
+                        btn_fav.setText("remove from favorites");
+                    }
                     if (fav_listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
@@ -107,8 +120,12 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
                 .load(landDetails.getThumbnail())
                 .into(holder.thumbnail);
 
+      //  if (clicked) holder.btn_fav.setEnabled(false);
+      //  else holder.btn_fav.setEnabled(true);
+
 
     }
+
 
     @Override
     public int getItemCount() {

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_fav"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_favorite_white"
+        android:title="favourite"
+        android:iconTint="@color/white"/>
+
+    <item
+        android:id="@+id/action_share"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_share_black_24dp"
+        android:title="share"
+        android:iconTint="@color/white"
+
+        />
+    <item
+        android:id="@+id/action_note"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_mode_edit_white"
+        android:title="note"
+        android:iconTint="@color/white"
+
+        />
+</menu>

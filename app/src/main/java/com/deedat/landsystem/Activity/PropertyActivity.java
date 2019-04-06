@@ -35,8 +35,8 @@ Toolbar toolbar;
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-        actionbar.setTitle(R.string.app_name);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        actionbar.setTitle("My Properties");
         actionbar.setElevation(10f);
         recyclerView = findViewById(R.id.recycler_view);
         //  coordinatorLayout = findViewById(R.id.coordinator_layout);
@@ -65,6 +65,8 @@ Toolbar toolbar;
             this.spacing = spacing;
             this.includeEdge = includeEdge;
         }
+
+
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {

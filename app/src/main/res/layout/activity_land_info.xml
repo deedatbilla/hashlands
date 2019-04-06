@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.LandInfoActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:fitsSystemWindows="true"
+
+
+
+        >
+<com.google.android.material.appbar.CollapsingToolbarLayout
+    android:id="@+id/collapsingToolBar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:titleTextColor="@color/white"
+    app:contentScrim="@color/colorPrimary"
+    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+
+
+    >
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:scaleType="centerCrop"
+        app:layout_collapseMode="pin"
+
+
+        />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@color/white"
+        app:layout_collapseMode="pin"
+        android:elevation="7dp">
+
+    </androidx.appcompat.widget.Toolbar>
+</com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_call"
+        app:backgroundTint="@color/white"
+        app:layout_anchor="@id/appbar"
+
+
+        app:layout_anchorGravity="bottom|right" />
+
+    <androidx.core.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           android:paddingTop="20dp">
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:background="@color/gray"
+               android:layout_marginBottom="2dp">
+               <TextView
+                   android:id="@+id/desc_dimen"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Plot Area"
+                   android:textFontWeight="100"
+                   android:textSize="10dp"
+
+
+                   />
+               <TextView
+                   android:id="@+id/dimen"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="600-3600 Sq.ft"
+                   android:textFontWeight="500"
+                   android:layout_below="@+id/desc_dimen"
+                   android:textSize="15dp"
+
+                   />
+
+               <TextView
+                   android:id="@+id/desc_owner"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentEnd="true"
+                   android:text="Owned by"
+                   android:textAlignment="viewStart"
+                   android:textFontWeight="100"
+
+
+                   android:textSize="10dp" />
+
+               <TextView
+                   android:id="@+id/name"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="deedat"
+                   android:textFontWeight="500"
+                   android:layout_below="@+id/desc_owner"
+                   android:layout_alignParentEnd="true"
+                   android:textSize="15dp"
+
+                   />
+           </RelativeLayout>
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="10dp"
+               android:background="@color/gray">
+               <TextView
+                   android:id="@+id/desc_code"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Land Code"
+                   android:textFontWeight="100"
+                   android:textSize="10dp"
+
+
+                   />
+               <TextView
+                   android:id="@+id/code"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="600-3600 Sq.ft"
+                   android:textFontWeight="500"
+                   android:layout_below="@+id/desc_code"
+                   android:textSize="15dp"
+
+                   />
+
+               <TextView
+                   android:id="@+id/desc_region"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentEnd="true"
+                   android:text="Region"
+                   android:textAlignment="viewStart"
+                   android:textFontWeight="100"
+
+
+                   android:textSize="10dp" />
+
+               <TextView
+                   android:id="@+id/region"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="deedat"
+                   android:textFontWeight="500"
+                   android:layout_below="@+id/desc_region"
+                   android:layout_alignParentEnd="true"
+                   android:textSize="15dp"
+
+                   />
+           </RelativeLayout>
+
+
+       </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

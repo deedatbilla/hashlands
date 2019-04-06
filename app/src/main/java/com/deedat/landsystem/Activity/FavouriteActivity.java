@@ -10,11 +10,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toolbar;
 
 import com.deedat.landsystem.Adapter.land_dets_adapter;
 import com.deedat.landsystem.Model.LandInfo;
 import com.deedat.landsystem.R;
+import com.deedat.landsystem.contants.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +28,37 @@ public class FavouriteActivity extends AppCompatActivity {
     private land_dets_adapter mAdapter;
     private ProgressDialog progressDialog;
     Toolbar toolbar;
+    Constants.TransitionType type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite);
         toolbar=findViewById(R.id.toolbar);
         toolbar.setTitle("Favorites");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
         recyclerView = findViewById(R.id.recycler_view);
         progressDialog = new ProgressDialog(this);
+        init();
         fetchlands();
 
     }
+
+    public void initAnimation(){
+
+    }
+
+    public void init(){
+        type= (Constants.TransitionType) getIntent().getSerializableExtra(Constants.KEY_ANIM_TYPE);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAfterTransition();
+            }
+        });
+    }
+
     public void fetchlands(){
 
         landInfoList = new ArrayList<>();

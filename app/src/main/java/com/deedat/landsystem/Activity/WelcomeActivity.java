@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.deedat.landsystem.R;
 import com.deedat.landsystem.pref.PrefManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
@@ -32,10 +33,10 @@ public class WelcomeActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
-
+    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
         // Checking for first time launch - before calling setContentView()
