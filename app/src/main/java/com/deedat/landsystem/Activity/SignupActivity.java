@@ -41,6 +41,7 @@ public class SignupActivity extends AppCompatActivity {
     Button register;
     EditText fullname, email, password;
     TextView login;
+    String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,11 +142,10 @@ public class SignupActivity extends AppCompatActivity {
         ProgressBar.setVisibility(View.GONE);
     }
 
-    private void onAuthSuccess(FirebaseUser user) {
-        String username = usernameFromEmail(user.getEmail());
-        String user_fullname = fullname.getText().toString().trim();
+    private void onAuthSuccess( FirebaseUser user) {
+
         // Write new user
-        writeNewUser(user.getUid(), user_fullname, username, user.getEmail());
+       getPublicKey(user);
 
         // Go to MainActivity
         Intent intent = new Intent(SignupActivity.this, MainActivity.class);
@@ -153,8 +153,8 @@ public class SignupActivity extends AppCompatActivity {
         finish();
     }
 
-    private void writeNewUser(String userId, String fullname, String name, String email) {
-        User user = new User(fullname, name, email);
+    private void writeNewUser(String userId, String fullname, String name, String email,String pubkey) {
+        User user = new User(fullname, name, email,pubkey);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         myRef.child("users").child(userId).setValue(user);
@@ -168,18 +168,22 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    public String getPublicKey() {
-         String pubKey="";
+    public void getPublicKey( final FirebaseUser user) {
+
+        final String username = usernameFromEmail(user.getEmail());
+        final String user_fullname = fullname.getText().toString().trim();
+        final String[] pubKey = {""};
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://d0d35903.ngrok.io/getKeys";
+        String url = "https://hashland.herokuapp.com/getKeys";
 
 // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                       // pubKey=response;
+                    public void onResponse(final String response) {
+
+                 pubKey[0] =response;
+                 writeNewUser(user.getUid(), user_fullname, username, user.getEmail(), pubKey[0]);
 
                     }
                 }, new Response.ErrorListener() {
@@ -191,7 +195,8 @@ public class SignupActivity extends AppCompatActivity {
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
-        return pubKey;
+
+
     }
 }
 

@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.deedat.landsystem.Adapter.land_dets_adapter;
+import com.deedat.landsystem.Adapter.suggestions_adapter;
 import com.deedat.landsystem.HomeFragment;
 import com.deedat.landsystem.Model.LandInfo;
 import com.deedat.landsystem.Model.User;
@@ -37,6 +39,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 //import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -52,7 +55,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
-public class MainActivity extends AppCompatActivity implements MaterialSearchBar.OnSearchActionListener {
+public class MainActivity extends AppCompatActivity implements  MaterialSearchBar.OnSearchActionListener,View.OnClickListener {
     Toolbar toolbar;
     Fragment fragment;
     FirebaseAuth auth;
@@ -68,72 +71,29 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     private SwipeRefreshLayout swipeRefreshLayout;
     private land_dets_adapter mAdapter;
     private ProgressDialog progressDialog;
-
+    private SuggestionsAdapter customSuggestionsAdapter;
 
 
     private Button fav;
 
     ProgressBar progressBar;
     FloatingActionButton floatingActionButton;
-//    BottomNavigationView navigation;
-//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.navigation_home:
-//                   // toolbar.setTitle("Home");
-//                    fragment = new HomeFragment();
-//                    loadFragment(fragment);
-//
-//                    return true;
-//                case R.id.navigation_activity:
-//                    //toolbar.setTitle("Activity");
-//                    fragment = new ActivityFragment();
-//                   loadFragment(fragment);
-//
-//
-//                    return true;
-//                case R.id.navigation_profile:
-//                   // toolbar.setTitle("Profile");
-//                    fragment = new ProfileActivity();
-//                    loadFragment(fragment);
-//
-//                    return true;
-//
-//                case R.id.navigation_fav:
-//                    //toolbar.setTitle("Favorites");
-//                    fragment = new ActivityFragment();
-//                    loadFragment(fragment);
-//
-//                    return true;
-//            }
-//            return false;
-//        }
-//    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
- setTheme(R.style.AppTheme);
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
         auth = FirebaseAuth.getInstance();
         String email = auth.getCurrentUser().getEmail();
         String uid = auth.getUid();
-       // coordinatorLayout = findViewById(R.id.container);
-
-//        navigation = (BottomNavigationView) findViewById(R.id.navigation);
-//
-//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//        //setSupportActionBar(toolbar);
-//        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
-//        layoutParams.setBehavior(new BottomNavigationBehavior());
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("users");
         searchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
         searchBar.setOnSearchActionListener(this);
         searchBar.inflateMenu(R.menu.main_menu);
-        searchBar.setText("Search lands...");
+       // searchBar.setText("Search lands...");
         Log.d("LOG_TAG", getClass().getSimpleName() + ": text " + searchBar.getText());
         searchBar.setCardViewElevation(10);
         searchBar.addTextChangeListener(new TextWatcher() {
@@ -252,27 +212,77 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
                     }
                 });
+        landInfoList = new ArrayList<>();
+        landInfoList.add(new LandInfo("GH-242324334","1200 by 800 sq.ft","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
+        landInfoList.add(new LandInfo("GH-977B8284","1320 by 300 sq.ft","GR-Achimota","Deedat Idriss Billa","https://horizon-media.s3-eu-west-1.amazonaws.com/s3fs-public/styles/large/public/field/image/Kenyan%20landscape%20cropped%20-%20shutterstock_216892456%20-%20Maciej%20Czekajewski.jpg?itok=7LOkfAm1"));
+        landInfoList.add(new LandInfo("GH-98676763","1100 by 800 sq.ft","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
+        landInfoList.add(new LandInfo("GH-242324334","1200 by 800 sq.ft","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
+        landInfoList.add(new LandInfo("GH-977B8284","1320 by 300 sq.ft","GR-Achimota","Deedat Idriss Billa","https://horizon-media.s3-eu-west-1.amazonaws.com/s3fs-public/styles/large/public/field/image/Kenyan%20landscape%20cropped%20-%20shutterstock_216892456%20-%20Maciej%20Czekajewski.jpg?itok=7LOkfAm1"));
+        landInfoList.add(new LandInfo("GH-98676763","1100 by 800 sq.ft","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        customSuggestionsAdapter = new suggestions_adapter(inflater);
+
+        searchBar.setMaxSuggestionCount(2);
+        searchBar.setHint("Find Land..");
+
+        // for (int i = 1; i < 11; i++) {
+        //   suggestions.add(new Product(products[i -1], i * 10));
+        //}
+
+        customSuggestionsAdapter.setSuggestions(landInfoList);
+        searchBar.setCustomSuggestionAdapter(customSuggestionsAdapter);
+
+        searchBar.addTextChangeListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d("LOG_TAG", getClass().getSimpleName() + " text changed " + searchBar.getText());
+                // send the entered text to our filter and let it manage everything
+                customSuggestionsAdapter.getFilter().filter(searchBar.getText());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+        });
         fetchlands();
         addToFavorite();
 
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_logout) {
+            auth.signOut();
+            Intent intent=new Intent(this,LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -296,18 +306,6 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
 
 
-    private void loadFragment(Fragment fragment) {
-        // load fragment
-
-        int count = getSupportFragmentManager().getBackStackEntryCount();
-        FragmentManager fragments = getSupportFragmentManager();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        //transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
-        transaction.replace(R.id.container, fragment);
-        //transaction.addToBackStack(null);
-        transaction.commit();
-
-    }
     public void property(){
         Intent intent=new Intent(this, PropertyActivity.class);
         startActivity(intent);
@@ -355,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     }
     public void fetchlands(){
 
-        landInfoList = new ArrayList<>();
+
         mAdapter = new land_dets_adapter(this, landInfoList);
 
         //  RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -381,12 +379,6 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
             }
         });
         recyclerView.setAdapter(mAdapter);
-        landInfoList.add(new LandInfo("GH-242324334","1200 by 800 sq.ft","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
-        landInfoList.add(new LandInfo("GH-977B8284","1320 by 300 sq.ft","GR-Achimota","Deedat Idriss Billa","https://horizon-media.s3-eu-west-1.amazonaws.com/s3fs-public/styles/large/public/field/image/Kenyan%20landscape%20cropped%20-%20shutterstock_216892456%20-%20Maciej%20Czekajewski.jpg?itok=7LOkfAm1"));
-        landInfoList.add(new LandInfo("GH-98676763","1100 by 800 sq.ft","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
-        landInfoList.add(new LandInfo("GH-242324334","1200 by 800 sq.ft","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
-        landInfoList.add(new LandInfo("GH-977B8284","1320 by 300 sq.ft","GR-Achimota","Deedat Idriss Billa","https://horizon-media.s3-eu-west-1.amazonaws.com/s3fs-public/styles/large/public/field/image/Kenyan%20landscape%20cropped%20-%20shutterstock_216892456%20-%20Maciej%20Czekajewski.jpg?itok=7LOkfAm1"));
-        landInfoList.add(new LandInfo("GH-98676763","1100 by 800 sq.ft","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
 
 
         //landInfoList.add(new LandInfo("GH-32543232","90 X 90","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
@@ -458,5 +450,17 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
             }
         });
     }
+    @Override
+public void onStart(){
+        super.onStart();
+        if(auth!=null){
 
+        }
+
+}
+
+    @Override
+    public void onClick(View view) {
+        customSuggestionsAdapter.addSuggestion(new LandInfo("GH-242324334","1200 by 800 sq.ft","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
+    }
 }

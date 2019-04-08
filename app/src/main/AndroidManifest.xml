@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.splashscreen" ></activity>
+        <activity android:name=".Activity.AddLandActivity"></activity>
+        <activity
+            android:name=".Activity.CustomAdapterActivity"
+            android:exported="true" />
+        <activity android:name=".Activity.splashscreen" />
         <activity android:name=".Activity.LandInfoActivity" />
         <activity android:name=".Activity.FavouriteActivity" />
         <activity
@@ -24,12 +28,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.MainActivity" android:theme="@style/AppTheme.Launcher"
-            android:label="@string/title_activity_main" />
+            android:name=".Activity.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.Launcher" />
         <activity android:name=".Activity.SignupActivity" />
-        <activity android:name=".Activity.WelcomeActivity" android:theme="@style/AppTheme.Launcher">
+        <activity
+            android:name=".Activity.WelcomeActivity"
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"  />
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

@@ -9,10 +9,10 @@
         android:iconTint="@color/white"/>
 
     <item
-        android:id="@+id/action_notification"
+        android:id="@+id/action_logout"
         app:showAsAction="never"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="Notification"
+        android:title="Sign out"
         android:iconTint="@color/white"
 
         />
