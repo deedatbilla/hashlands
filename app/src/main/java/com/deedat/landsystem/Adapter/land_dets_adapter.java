@@ -1,22 +1,18 @@
 package com.deedat.landsystem.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.deedat.landsystem.Model.LandInfo;
 import com.deedat.landsystem.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -116,8 +112,8 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
         final LandInfo landDetails = landInfos.get(position);
         holder.landcode.setText(landDetails.getLandcode());
         holder.owner.setText(landDetails.getOwner_name());
-        holder.location.setText(landDetails.getLocation());
-        holder.dimen.setText(landDetails.getDimen());
+        holder.location.setText(landDetails.getLandregion()+"-"+landDetails.getLandarea());
+        holder.dimen.setText(landDetails.getLength()+" by "+landDetails.getWidth()+" sq.ft");
         Glide.with(context)
                 .load(landDetails.getThumbnail())
                 .into(holder.thumbnail);

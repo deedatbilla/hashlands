@@ -1,6 +1,5 @@
 package com.deedat.landsystem.Adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +7,6 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.deedat.landsystem.Model.LandInfo;
 import com.deedat.landsystem.R;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
@@ -38,7 +36,7 @@ public class suggestions_adapter extends SuggestionsAdapter<LandInfo, suggestion
     @Override
     public void onBindSuggestionHolder(LandInfo suggestion, SuggestionHolder holder, int position) {
         holder.title.setText(suggestion.getLandcode());
-        holder.subtitle.setText("Location " + suggestion.getLocation());
+        holder.subtitle.setText("Location " + suggestion.getLandregion()+"-"+suggestion.getLandarea());
         //Glide.with(context).load(suggestion.getThumbnail()).into(holder.image);
     }
 

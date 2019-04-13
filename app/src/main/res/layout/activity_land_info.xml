@@ -161,7 +161,7 @@
                    android:textSize="10dp" />
 
                <TextView
-                   android:id="@+id/region"
+                   android:id="@+id/landregion"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="deedat"

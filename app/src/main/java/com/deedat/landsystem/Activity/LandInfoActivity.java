@@ -2,13 +2,9 @@ package com.deedat.landsystem.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +18,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.deedat.landsystem.Model.LandInfo;
 import com.deedat.landsystem.R;
-import com.deedat.landsystem.contants.Constants;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -38,7 +33,7 @@ public class LandInfoActivity extends AppCompatActivity {
         TextView owner=findViewById(R.id.name);
         TextView dimen=findViewById(R.id.dimen);
         TextView code=findViewById(R.id.code);
-        TextView region=findViewById(R.id.region);
+        TextView region=findViewById(R.id.landregion);
 
         toolbar.inflateMenu(R.menu.land_detail_menu);
         Intent intent=getIntent();
@@ -55,7 +50,7 @@ public class LandInfoActivity extends AppCompatActivity {
                 .into(imageView);
         owner.setText(landInfo.getOwner_name());
         code.setText(landInfo.getLandcode());
-        region.setText(landInfo.getLocation());
+        region.setText(landInfo.getLandregion()+" by "+landInfo.getLandarea());
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.collapsingToolBar);
         collapsingToolbarLayout.setTitle(landInfo.getLandcode());

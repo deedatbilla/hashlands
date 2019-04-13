@@ -48,7 +48,7 @@ Toolbar toolbar;
     private land_dets_adapter mAdapter;
     RelativeLayout relativeLayout;
     ProgressBar progressBar;
-    ArrayList<my_land_data> my_land_dataArrayList=new ArrayList<>();
+    ArrayList<LandInfo> my_land_dataArrayList=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +69,7 @@ Toolbar toolbar;
         toolbar = findViewById(R.id.toolbar);
         //floatingActionButton=findViewById(R.id.fab);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        relativeLayout=findViewById(R.id.empty);
+       // relativeLayout=findViewById(R.id.empty);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,24 +78,20 @@ Toolbar toolbar;
         });
         toolbar.setTitle("My Properties");
         toolbar.setElevation(10f);
+
         recyclerView = findViewById(R.id.recycler_view);
         //coordinatorLayout = findViewById(R.id.coordinator_layout);
-        landInfoList = new ArrayList<>();
-
-        progressBar.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
-        recyclerView.setAdapter(mAdapter);
         databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 my_land_dataArrayList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    my_land_data mld = snapshot.getValue(my_land_data.class);
+                    LandInfo mld = snapshot.getValue(LandInfo.class);
 
                     my_land_dataArrayList.add(mld);
 
                 }
-                mAdapter = new land_dets_adapter(PropertyActivity.this, landInfoList);
+                mAdapter = new land_dets_adapter(PropertyActivity.this, my_land_dataArrayList);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PropertyActivity.this);
                 recyclerView.setLayoutManager(mLayoutManager);
                 mAdapter.notifyDataSetChanged();
@@ -119,11 +115,11 @@ Toolbar toolbar;
 
             }
         });
-        if(mAdapter.getItemCount()!=0){
-            relativeLayout.setVisibility(View.GONE);
-            progressBar.setVisibility(View.GONE);
-        }
 
+//        if(mAdapter.getItemCount()!=0){
+//            relativeLayout.setVisibility(View.GONE);
+//            progressBar.setVisibility(View.GONE);
+//        }
     }
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {

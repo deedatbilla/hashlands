@@ -71,8 +71,8 @@ public class LandInfoAdapter extends RecyclerView.Adapter<LandInfoAdapter.MyView
         final LandInfo landDetails = landInfos.get(position);
         holder.landcode.setText(landDetails.getLandcode());
         holder.owner.setText(landDetails.getOwner_name());
-        holder.location.setText(landDetails.getLocation());
-        holder.dimen.setText(landDetails.getDimen());
+//        holder.location.setText(landDetails.getLocation());
+//        holder.dimen.setText(landDetails.getDimen());
 
     }
 
