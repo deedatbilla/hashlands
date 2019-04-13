@@ -1,5 +1,6 @@
 package com.deedat.landsystem.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +16,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.deedat.landsystem.Adapter.LandInfoAdapter;
@@ -22,22 +24,40 @@ import com.deedat.landsystem.Adapter.land_dets_adapter;
 import com.deedat.landsystem.HomeFragment;
 import com.deedat.landsystem.Model.LandInfo;
 import com.deedat.landsystem.R;
+import com.deedat.landsystem.Model.my_land_data;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PropertyActivity extends AppCompatActivity {
 Toolbar toolbar;
-FloatingActionButton fab;
+    FirebaseAuth firebaseAuth;
+    FirebaseDatabase database;
+    DatabaseReference databaseReference;
+    FloatingActionButton fab;
     private RecyclerView recyclerView;
     private List<LandInfo> landInfoList;
     private land_dets_adapter mAdapter;
     RelativeLayout relativeLayout;
+    ProgressBar progressBar;
+    ArrayList<my_land_data> my_land_dataArrayList=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
+        firebaseAuth=FirebaseAuth.getInstance();
+        final String uid=firebaseAuth.getUid();
+        progressBar = findViewById(R.id.progress_bar);
+        database=FirebaseDatabase.getInstance();
+        databaseReference=database.getReference("myland_linked_to_account");
         fab=findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,32 +70,58 @@ FloatingActionButton fab;
         //floatingActionButton=findViewById(R.id.fab);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         relativeLayout=findViewById(R.id.empty);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         toolbar.setTitle("My Properties");
         toolbar.setElevation(10f);
-        toolbar.setTitleTextColor(Color.WHITE);
         recyclerView = findViewById(R.id.recycler_view);
         //coordinatorLayout = findViewById(R.id.coordinator_layout);
         landInfoList = new ArrayList<>();
-        mAdapter = new land_dets_adapter(this, landInfoList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(mLayoutManager);
-        //progressDialog.setTitle("LogIn");
 
-       // RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-       // recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(6), true));
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
-
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
         recyclerView.setAdapter(mAdapter);
+        databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                my_land_dataArrayList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    my_land_data mld = snapshot.getValue(my_land_data.class);
 
-//        landInfoList.add(new LandInfo("GH-242324334","1200 by 800 sq.ft","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
-//        landInfoList.add(new LandInfo("GH-977B8284","1320 by 300 sq.ft","GR-Achimota","Deedat Idriss Billa","https://horizon-media.s3-eu-west-1.amazonaws.com/s3fs-public/styles/large/public/field/image/Kenyan%20landscape%20cropped%20-%20shutterstock_216892456%20-%20Maciej%20Czekajewski.jpg?itok=7LOkfAm1"));
-//        landInfoList.add(new LandInfo("GH-98676763","1100 by 800 sq.ft","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
-//        landInfoList.add(new LandInfo("GH-242324334","1200 by 800 sq.ft","CR-Kasoa","Ivar Boneless","https://lh3.googleusercontent.com/Ivt7imnUp4Jp7Oe_PzxNnOZAOtU6tVcwUG-ylEJ6-uCWFAYEQ9F2-atNyLWgTjq-LG2_BTPHPz2brpY_7QYVYRZhgBXBCL5w=s750"));
-//        landInfoList.add(new LandInfo("GH-977B8284","1320 by 300 sq.ft","GR-Achimota","Deedat Idriss Billa","https://horizon-media.s3-eu-west-1.amazonaws.com/s3fs-public/styles/large/public/field/image/Kenyan%20landscape%20cropped%20-%20shutterstock_216892456%20-%20Maciej%20Czekajewski.jpg?itok=7LOkfAm1"));
-//        landInfoList.add(new LandInfo("GH-98676763","1100 by 800 sq.ft","CR-Winneba","Paul Dwamena","https://content.magicbricks.com/images/uploads/2018/3/lands1.jpg"));
+                    my_land_dataArrayList.add(mld);
+
+                }
+                mAdapter = new land_dets_adapter(PropertyActivity.this, landInfoList);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PropertyActivity.this);
+                recyclerView.setLayoutManager(mLayoutManager);
+                mAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+
+//                mAdapter.setOnItemClickListener(new ArticleListAdapter.onItemClickListener() {
+//                    @Override
+//                    public void onItemClick(int position) {
+//                        Intent intent=new Intent(getActivity(),Article_content.class);
+//                        intent.putExtra("article_data", articleList.get(position));
+//                        startActivity(intent);
+//                    }
+//                });
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         if(mAdapter.getItemCount()!=0){
             relativeLayout.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
         }
 
     }

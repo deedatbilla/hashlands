@@ -55,35 +55,41 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/fNameLayout"
-
+                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
                     android:layout_marginTop="10dp"
                     app:boxBackgroundMode="filled"
                     app:boxStrokeWidth="@dimen/slightly_visible_icon">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ltitle"
+                        android:id="@+id/asaasecode"
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
 
-                        android:hint="Asaase Code" />
+                        android:hint="Asaase Code"
+                        android:inputType="textAutoComplete" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/lNameLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
                     android:layout_below="@+id/fNameLayout"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    app:boxStrokeWidth="@dimen/slightly_visible_icon">
+                    app:boxBackgroundMode="filled"
+                   >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ldesc"
+                        android:id="@+id/securitycode"
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Security Code" />
+                        android:hint="Security Code"
+                        android:inputType="textAutoComplete" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -93,6 +99,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -101,4 +108,6 @@
         app:fabSize="normal"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right" />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

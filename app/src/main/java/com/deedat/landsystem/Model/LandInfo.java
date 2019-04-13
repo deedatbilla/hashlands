@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class LandInfo implements Parcelable {
-    private String landcode,dimen,location,owner_name,thumbnail;
+    private String landcode,dimen,location,owner_name,thumbnail,region;
 
     public LandInfo(String landcode, String dimen, String location, String owner_name,String thumbnail) {
         this.landcode = landcode;
