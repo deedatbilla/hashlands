@@ -50,7 +50,7 @@ public class LandInfoActivity extends AppCompatActivity {
                 .into(imageView);
         owner.setText(landInfo.getOwner_name());
         code.setText(landInfo.getLandcode());
-        region.setText(landInfo.getLandregion()+" by "+landInfo.getLandarea());
+        region.setText(landInfo.getLandregion()+"-"+landInfo.getLandarea());
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.collapsingToolBar);
         collapsingToolbarLayout.setTitle(landInfo.getLandcode());

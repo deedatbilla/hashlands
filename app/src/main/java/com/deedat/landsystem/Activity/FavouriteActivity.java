@@ -62,7 +62,7 @@ public class FavouriteActivity extends AppCompatActivity {
     public void fetchlands(){
 
         landInfoList = new ArrayList<>();
-        mAdapter = new land_dets_adapter(this, landInfoList);
+        mAdapter = new land_dets_adapter(this, landInfoList,true);
 
         //  RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         //  recyclerView.setLayoutManager(mLayoutManager);

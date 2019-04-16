@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.deedat.landsystem.Activity.PropertyActivity;
 import com.deedat.landsystem.Model.LandInfo;
 import com.deedat.landsystem.R;
 
@@ -34,11 +36,18 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
 
     private Context context;
     private List<LandInfo> landInfos;
+    private boolean disable;
 
-    public  land_dets_adapter(Context context, List<LandInfo> xlandinfo) {
+    public  land_dets_adapter(Context context, List<LandInfo> xlandinfo,Boolean disable) {
         this.context = context;
         this.landInfos = xlandinfo;
+        this.disable=disable;
+
     }
+
+   private String message;
+   public boolean is_sale_clicked;
+
 
     public void setOnItemClickListener(onItemClickListener listener) {
         mListener = listener;
@@ -49,9 +58,9 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView landcode, dimen, location, owner;
-        ImageView call,thumbnail;
-        Button btn_fav;
+        TextView landcode, dimen, location, owner,sale;
+        ImageView menu,thumbnail;
+        TextView btn_fav;
 
         public MyViewHolder(@NonNull View itemView, final onItemClickListener listener, final onfavoriteClickListener fav_listener) {
             super(itemView);
@@ -59,9 +68,19 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
            dimen=itemView.findViewById(R.id.dimensions);
            location=itemView.findViewById(R.id.location);
            owner=itemView.findViewById(R.id.owner_name);
-           btn_fav=itemView.findViewById(R.id.btn_fav);
-           call=itemView.findViewById(R.id.call);
+           btn_fav=itemView.findViewById(R.id.sale);
+           menu=itemView.findViewById(R.id.menu);
            thumbnail=itemView.findViewById(R.id.llimage);
+
+
+
+           if (disable) {
+               btn_fav.setVisibility(View.GONE);
+           }
+           else {
+               btn_fav.setVisibility(View.VISIBLE);
+           }
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,18 +94,26 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
                 }
             });
 
+
             btn_fav.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
+
                 @Override
                 public void onClick(View v) {
-                    if (clicked){
-                        //btn_fav.setBackgroundColor(Color.red(200));
-                        btn_fav.setText("add to favorites");
+
+                    if (is_sale_clicked){
+                        btn_fav.setText("Undo");
                     }
                     else {
-                        //btn_fav.setBackgroundColor(Col);
-                        btn_fav.setText("remove from favorites");
+                        btn_fav.setText("Set For sale");
                     }
+//                    if (clicked){
+//                        //btn_fav.setBackgroundColor(Color.red(200));
+//                        btn_fav.setText("add to favorites");
+//                    }
+//                    else {
+//                        //btn_fav.setBackgroundColor(Col);
+//                        btn_fav.setText("remove from favorites");
+//                    }
                     if (fav_listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
@@ -102,7 +129,7 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.lands_list, parent, false);
+                .inflate(R.layout.land_list_new, parent, false);
 
         return new MyViewHolder(itemView, mListener,onfavoriteClick);
     }

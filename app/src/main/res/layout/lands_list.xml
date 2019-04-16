@@ -95,7 +95,7 @@ android:textSize="10dp"
 
 
                 <ImageView
-                    android:id="@+id/call"
+                    android:id="@+id/menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -118,6 +118,23 @@ android:textSize="10dp"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/sale"
+                    android:clickable="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set For sale"
+                    android:layout_marginTop="10dp"
+                    android:elevation="30dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignBottom="@+id/llimage"
+                    android:layout_marginRight="13dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/sale_background"
+
+                    />
                 </RelativeLayout>
 
             </LinearLayout>

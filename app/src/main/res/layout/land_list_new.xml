@@ -1,0 +1,137 @@
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#fff">
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    app:cardCornerRadius="4dp"
+    android:elevation="2dp"
+   >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+            <ImageView
+                android:id="@+id/llimage"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/photo2"
+                android:transitionName="image_shared"
+
+                />
+
+    <ImageView
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@+id/llimage"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_favorite"
+        android:textSize="10dp" />
+
+    <TextView
+        android:id="@+id/sale"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set For sale"
+        android:layout_marginTop="10dp"
+        android:elevation="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/llimage"
+        android:layout_marginRight="13dp"
+        android:textColor="@color/white"
+        android:background="@drawable/sale_background"
+
+        />
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+</com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/open_sans"
+        android:text="A345524323432"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:transitionName="code_shared" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/code"
+        android:layout_centerVertical="true"
+        android:textSize="10dp"
+        android:text="West Land"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/owner_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Owned By Mike Ross"
+        android:layout_below="@+id/location"
+        android:layout_centerVertical="true"
+
+        />
+
+
+    <!--<com.google.android.material.button.MaterialButton-->
+        <!--android:id="@+id/btn_fav"-->
+        <!--android:visibility="gone"-->
+        <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:background="@null"-->
+        <!--android:layout_marginLeft="3dp"-->
+        <!--app:icon="@drawable/ic_favorite"-->
+        <!--android:text="Add to favorites"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textSize="8sp"-->
+        <!--/>-->
+
+    <TextView
+        android:id="@+id/dimensions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/owner_name"
+        android:gravity="center"
+        android:text="90 X 90"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+
+
+
+
+</RelativeLayout>
