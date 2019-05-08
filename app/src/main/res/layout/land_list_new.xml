@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    android:clickable="true"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -11,8 +11,7 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    app:cardCornerRadius="4dp"
+    app:cardCornerRadius="3dp"
     android:elevation="2dp"
    >
 <RelativeLayout
@@ -24,31 +23,34 @@
             <ImageView
                 android:id="@+id/llimage"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="120dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/photo2"
+                android:src="@drawable/no_image"
                 android:transitionName="image_shared"
 
                 />
 
-    <ImageView
-        android:id="@+id/menu"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="13dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="9dp"
         android:layout_alignTop="@+id/llimage"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/ic_favorite"
-        android:textSize="10dp" />
+        android:src="@drawable/ic_favorite_off"
+        android:textSize="10dp"
+        android:clickable="true"
+        android:background="#00ffffff"
+        />
 
     <TextView
         android:id="@+id/sale"
         android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set For sale"
+        android:text="For sale"
         android:layout_marginTop="10dp"
         android:elevation="30dp"
         android:layout_marginBottom="8dp"
@@ -81,8 +83,9 @@
         android:layout_marginTop="5dp"
         android:fontFamily="@font/open_sans"
         android:text="A345524323432"
-        android:textSize="18sp"
+        android:textSize="12sp"
         android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
         android:transitionName="code_shared" />
 
     <TextView
@@ -95,15 +98,16 @@
         android:text="West Land"
         android:textStyle="bold"
         />
+
     <TextView
         android:id="@+id/owner_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Owned By Mike Ross"
         android:layout_below="@+id/location"
         android:layout_centerVertical="true"
+        android:text="Owned By Mike Ross"
 
-        />
+        android:visibility="gone" />
 
 
     <!--<com.google.android.material.button.MaterialButton-->

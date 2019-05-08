@@ -17,11 +17,9 @@
         >
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
         android:gravity="center"
         android:background="#f5f5f5"
 
@@ -48,10 +46,9 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="deedat5@gmail.com"
-
             android:textSize="14sp" />
 
         <TextView

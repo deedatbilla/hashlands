@@ -1,17 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_search"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_search"
-        android:title="@string/search_hint"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:iconTint="@color/white"/>
+
 
     <item
         android:id="@+id/action_logout"
-        app:showAsAction="never"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_power_settings_new"
         android:title="Sign out"
         android:iconTint="@color/white"
 

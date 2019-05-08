@@ -11,13 +11,6 @@
         android:layout_height="match_parent">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-
-        android:id="@+id/recycler_view"
-        android:layout_below="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
 
@@ -39,9 +32,36 @@
             <!--android:textColor="@color/white"-->
             <!--android:textSize="18sp" />-->
         </androidx.appcompat.widget.Toolbar>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
 
+            >
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="10dp"-->
+            <!--android:text="My Lands"-->
+            <!--android:textSize="24sp"-->
+            <!--android:textStyle="bold" />-->
+        <androidx.recyclerview.widget.RecyclerView
 
-    <RelativeLayout
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <RelativeLayout
         android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,16 +73,24 @@
             android:id="@+id/image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-
             android:src="@drawable/ic_grain"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+
            />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/image"
-            android:gravity="center"
-            android:text="You have no lands yet" />
+            <TextView
+                android:layout_below="@+id/image"
+                android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="You Currently have no land linked to your account"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
     </RelativeLayout>
     </RelativeLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -82,4 +110,6 @@
         android:layout_gravity="center"
         android:visibility="visible"
         />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

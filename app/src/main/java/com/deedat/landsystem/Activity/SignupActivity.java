@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.deedat.landsystem.Model.MyCustomObject;
 import com.deedat.landsystem.Model.User;
 import com.deedat.landsystem.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +40,7 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseAuth auth;
     private ProgressDialog progressDialog;
     Button register;
-    EditText fullname, email, password;
+    EditText fullname, email, password,phone;
     TextView login;
     String key;
 
@@ -64,6 +65,7 @@ public class SignupActivity extends AppCompatActivity {
         register = findViewById(R.id.register);
         fullname = findViewById(R.id.fullname);
         email = findViewById(R.id.email);
+        phone = findViewById(R.id.phone);
         password = findViewById(R.id.password);
         // login=findViewById(R.id);
 
@@ -79,9 +81,15 @@ public class SignupActivity extends AppCompatActivity {
                 String user_fullname = fullname.getText().toString().trim();
                 String user_email = email.getText().toString().trim();
                 String user_password = password.getText().toString().trim();
+                String user_phone = phone.getText().toString().trim();
 
                 if (TextUtils.isEmpty(user_fullname)) {
                     Toast.makeText(getApplicationContext(), "Enter full name!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(user_phone)) {
+                    Toast.makeText(getApplicationContext(), "Enter phone number!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -142,19 +150,38 @@ public class SignupActivity extends AppCompatActivity {
         ProgressBar.setVisibility(View.GONE);
     }
 
-    private void onAuthSuccess( FirebaseUser user) {
-
+    private void onAuthSuccess(final FirebaseUser user) {
+        final String username = usernameFromEmail(user.getEmail());
+        final String user_fullname = fullname.getText().toString().trim();
+        final String phone_number = phone.getText().toString().trim();
         // Write new user
-       getPublicKey(user);
 
         // Go to MainActivity
+
+        MyCustomObject object = new MyCustomObject(this);
+        // Step 4 - Setup the listener for this object
+        object.setCustomObjectListener(new MyCustomObject.MyCustomObjectListener() {
+            @Override
+            public void onObjectReady(String title) {
+                // Code to handle object ready
+            }
+
+            @Override
+            public void onDataLoaded(String data) {
+                writeNewUser(user.getUid(), user_fullname, username, user.getEmail(), data,phone_number);
+                 Log.v("mydata",data);
+
+            }
+
+
+        });
         Intent intent = new Intent(SignupActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void writeNewUser(String userId, String fullname, String name, String email,String pubkey) {
-        User user = new User(fullname, name, email,pubkey);
+    private void writeNewUser(String userId, String fullname, String name, String email,String pubkey,String phone) {
+        User user = new User(fullname, name, email,pubkey,phone);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         myRef.child("users").child(userId).setValue(user);
@@ -168,36 +195,7 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    public void getPublicKey( final FirebaseUser user) {
 
-        final String username = usernameFromEmail(user.getEmail());
-        final String user_fullname = fullname.getText().toString().trim();
-        final String[] pubKey = {""};
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://hashland.herokuapp.com/getKeys";
-
-// Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
-
-                 pubKey[0] =response;
-                 writeNewUser(user.getUid(), user_fullname, username, user.getEmail(), pubKey[0]);
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.v("tag", "that didnt work");
-            }
-        });
-
-// Add the request to the RequestQueue.
-        queue.add(stringRequest);
-
-
-    }
 }
 
 

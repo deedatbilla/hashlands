@@ -20,7 +20,7 @@
     android:fitsSystemWindows="true"
     app:titleTextColor="@color/white"
     app:contentScrim="@color/colorPrimary"
-    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+    app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap"
 
 
     >
@@ -57,14 +57,13 @@
         android:src="@drawable/ic_call"
         app:backgroundTint="@color/white"
         app:layout_anchor="@id/appbar"
-
-
         app:layout_anchorGravity="bottom|right" />
 
     <androidx.core.widget.NestedScrollView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp">
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent"
@@ -73,21 +72,13 @@
           >
 
            <TextView
+               android:id="@+id/landcode"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_margin="5dp"
-               android:text="Details"
                android:textSize="18dp"
-
-
+               android:layout_margin="10dp"
                android:textStyle="bold" />
-           <androidx.cardview.widget.CardView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:background="@color/gray"
-               android:layout_margin="5dp"
-               android:elevation="12dp"
-               >
+
                <RelativeLayout
 
                    android:layout_width="match_parent"
@@ -104,7 +95,6 @@
                    android:id="@+id/desc_dimen"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-
                    android:textFontWeight="500"
                    android:textSize="15dp"
                    android:text="Plot Area"
@@ -123,28 +113,28 @@
                    android:textSize="10dp"
                    />
 
-               <TextView
-                   android:id="@+id/desc_owner"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_alignParentEnd="true"
-                   android:textAlignment="viewStart"
-                   android:text="Owned by"
-                   android:textSize="15dp"
-                   android:textFontWeight="500"
-                  />
+               <!--<TextView-->
+                   <!--android:id="@+id/desc_owner"-->
+                   <!--android:layout_width="wrap_content"-->
+                   <!--android:layout_height="wrap_content"-->
+                   <!--android:layout_alignParentEnd="true"-->
+                   <!--android:textAlignment="viewStart"-->
+                   <!--android:text="Owned by"-->
+                   <!--android:textSize="15dp"-->
+                   <!--android:textFontWeight="500"-->
+                  <!--/>-->
 
-               <TextView
-                   android:id="@+id/name"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="deedat"
-                   android:layout_below="@+id/desc_owner"
-                   android:layout_alignParentEnd="true"
-                   android:textFontWeight="100"
-                   android:textSize="10dp"
+               <!--<TextView-->
+                   <!--android:id="@+id/name"-->
+                   <!--android:layout_width="wrap_content"-->
+                   <!--android:layout_height="wrap_content"-->
+                   <!--android:text="deedat"-->
+                   <!--android:layout_below="@+id/desc_owner"-->
+                   <!--android:layout_alignParentEnd="true"-->
+                   <!--android:textFontWeight="100"-->
+                   <!--android:textSize="10dp"-->
 
-                   />
+                   <!--/>-->
            </RelativeLayout>
 
            <RelativeLayout
@@ -168,7 +158,6 @@
                    android:layout_height="wrap_content"
                    android:text="600 by 3600 Sq.ft"
                    android:layout_below="@+id/desc_code"
-
                    android:textFontWeight="100"
                    android:textSize="10dp"
 
@@ -179,9 +168,8 @@
                    android:id="@+id/desc_region"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_alignParentEnd="true"
+                  android:layout_below="@+id/code"
                    android:text="Region"
-                   android:textAlignment="viewStart"
                    android:textFontWeight="500"
                    android:textSize="15dp"
                     />
@@ -191,17 +179,18 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="deedat"
+
                    android:textFontWeight="100"
                    android:textSize="10dp"
                    android:layout_below="@+id/desc_region"
-                   android:layout_alignParentEnd="true"
+
 
 
                    />
            </RelativeLayout>
                </RelativeLayout>
 
-           </androidx.cardview.widget.CardView>
+
 
 
            <TextView
@@ -211,15 +200,66 @@
                android:text="Previous Owners"
                android:textSize="18dp"
                android:textStyle="bold" />
-           <androidx.recyclerview.widget.RecyclerView
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:layout_margin="5dp">
+           <!--<androidx.recyclerview.widget.RecyclerView-->
+               <!--android:layout_width="match_parent"-->
+               <!--android:layout_height="match_parent"-->
+               <!--android:layout_margin="5dp">-->
 
-           </androidx.recyclerview.widget.RecyclerView>
+           <!--</androidx.recyclerview.widget.RecyclerView>-->
 
        </LinearLayout>
 
 
     </androidx.core.widget.NestedScrollView>
+  <com.google.android.material.card.MaterialCardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:elevation="35dp"
+      app:cardElevation="13dp"
+      android:background="@color/gray"
+      android:backgroundTint="@color/gray"
+      >
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="15dp">
+          <TextView
+              android:id="@+id/price"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="GHC12000"
+              android:layout_margin="5dp"
+
+              />
+
+          <RatingBar
+              android:id="@+id/rating"
+              style="@style/Widget.AppCompat.RatingBar.Small"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/price"
+              android:numStars="5"
+              android:rating="5"
+              android:stepSize="0.5"
+              android:theme="@style/RatingBar" />
+
+
+          <Button
+              android:id="@+id/buy"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@color/dot_dark_screen1"
+              android:backgroundTint="@color/dot_dark_screen1"
+              android:layout_alignParentEnd="true"
+              android:textColor="@color/white"
+              android:padding="15dp"
+              android:text="Show Interest"
+              style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+              />
+
+      </RelativeLayout>
+
+  </com.google.android.material.card.MaterialCardView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

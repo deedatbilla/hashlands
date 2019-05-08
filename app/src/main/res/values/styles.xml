@@ -33,4 +33,8 @@
     <!-- Optional, on Android 5+ you can modify the colorPrimaryDark color to match the windowBackground color for further branding-->
     <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
     </style>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/dot_dark_screen1</item>
+    </style>
 </resources>

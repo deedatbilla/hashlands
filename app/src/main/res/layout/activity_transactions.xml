@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.LandInfoActivity">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:fitsSystemWindows="true"
+
+
+        >
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:titleTextColor="@color/white"
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+
+
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transactions"
+                android:layout_gravity="top|left"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+
+                android:textSize="18dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/completed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="5"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="26dp" />
+
+                <TextView
+                    android:id="@+id/completed_text"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/completed"
+                    android:layout_centerInParent="true"
+
+                    android:text="Transactions completed"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+
+
+            </RelativeLayout>
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@color/dot_dark_screen1"
+                android:backgroundTint="@color/dot_dark_screen1"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/white"
+                android:padding="8dp"
+                android:layout_gravity="bottom"
+                android:text="Buy Land"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+
+                />
+
+
+            <Button
+                android:id="@+id/sell"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@color/dot_dark_screen1"
+                android:backgroundTint="@color/dot_dark_screen1"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/white"
+                android:padding="8dp"
+                android:layout_gravity="bottom|right"
+                android:text="Sell Land"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:titleTextColor="@color/white"
+                app:layout_collapseMode="pin"
+                android:elevation="7dp">
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+    <androidx.core.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="6dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            >
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="Transactions"
+            android:layout_margin="4dp"
+            android:textStyle="bold" />
+
+            <!--<androidx.recyclerview.widget.RecyclerView-->
+                <!--android:id="@+id/recycler_view_transactions"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+
+            <!--</androidx.recyclerview.widget.RecyclerView>-->
+
+            <include layout="@layout/transactions_card"></include>
+            <include layout="@layout/transactions_card"></include>
+            <include layout="@layout/transactions_card"></include>
+            <include layout="@layout/transactions_card"></include>
+            <include layout="@layout/transactions_card"></include>
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/empty"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:visibility="gone"-->
+        <!--&gt;-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/image"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:src="@drawable/ic_grain"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+
+            <!--/>-->
+
+        <!--<TextView-->
+            <!--android:layout_below="@+id/image"-->
+            <!--android:id="@+id/message"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:text="You Currently have no land linked to your account"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textStyle="bold"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -75,17 +75,15 @@ android:textSize="10dp"
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_fav"
-                    android:visibility="gone"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignTop="@+id/llimage"
-
                     android:background="@null"
-                  android:layout_alignRight="@id/dimensions"
+                    android:layout_alignRight="@id/dimensions"
                     android:layout_alignBottom="@+id/llimage"
                     android:layout_marginLeft="3dp"
-                    app:icon="@drawable/ic_favorite"
+                    app:icon="@drawable/ic_favorite_off"
                     android:text="Add to favorites"
                     android:textAlignment="center"
                     android:textSize="8sp"
@@ -94,17 +92,6 @@ android:textSize="10dp"
 
 
 
-                <ImageView
-                    android:id="@+id/menu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="13dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_alignTop="@+id/llimage"
-                    android:layout_marginBottom="8dp"
-                   android:src="@drawable/popup"
-                    android:textSize="10dp" />
 
 
                 <TextView
@@ -121,18 +108,18 @@ android:textSize="10dp"
 
                 <TextView
                     android:id="@+id/sale"
-                    android:clickable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Set For sale"
-                    android:layout_marginTop="10dp"
-                    android:elevation="30dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignBottom="@+id/llimage"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="13dp"
-                    android:textColor="@color/white"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/sale_background"
+                    android:clickable="true"
+                    android:elevation="30dp"
+                    android:text="For sale"
+                    android:textColor="@color/white"
 
                     />
                 </RelativeLayout>

@@ -33,9 +33,11 @@ public class LandInfoActivity extends AppCompatActivity {
         TextView owner=findViewById(R.id.name);
         TextView dimen=findViewById(R.id.dimen);
         TextView code=findViewById(R.id.code);
+        TextView landcode=findViewById(R.id.landcode);
         TextView region=findViewById(R.id.landregion);
 
         toolbar.inflateMenu(R.menu.land_detail_menu);
+
         Intent intent=getIntent();
          toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -48,12 +50,13 @@ public class LandInfoActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(landInfo.getThumbnail())
                 .into(imageView);
-        owner.setText(landInfo.getOwner_name());
+      //  owner.setText(landInfo.getOwner_name());
         code.setText(landInfo.getLandcode());
+        landcode.setText(landInfo.getLandcode());
         region.setText(landInfo.getLandregion()+"-"+landInfo.getLandarea());
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.collapsingToolBar);
-        collapsingToolbarLayout.setTitle(landInfo.getLandcode());
+        //collapsingToolbarLayout.setTitle(landInfo.getLandcode());
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
         collapsingToolbarLayout.isTitleEnabled();

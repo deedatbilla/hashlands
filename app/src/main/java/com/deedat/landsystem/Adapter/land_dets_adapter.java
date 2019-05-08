@@ -1,11 +1,14 @@
 package com.deedat.landsystem.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,7 +63,7 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView landcode, dimen, location, owner,sale;
         ImageView menu,thumbnail;
-        TextView btn_fav;
+        ImageButton btn_fav;
 
         public MyViewHolder(@NonNull View itemView, final onItemClickListener listener, final onfavoriteClickListener fav_listener) {
             super(itemView);
@@ -68,17 +71,20 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
            dimen=itemView.findViewById(R.id.dimensions);
            location=itemView.findViewById(R.id.location);
            owner=itemView.findViewById(R.id.owner_name);
-           btn_fav=itemView.findViewById(R.id.sale);
-           menu=itemView.findViewById(R.id.menu);
+           btn_fav=itemView.findViewById(R.id.fav);
+           sale=itemView.findViewById(R.id.sale);
+
            thumbnail=itemView.findViewById(R.id.llimage);
 
 
 
            if (disable) {
                btn_fav.setVisibility(View.GONE);
+               sale.setVisibility(View.GONE);
            }
            else {
                btn_fav.setVisibility(View.VISIBLE);
+               sale.setVisibility(View.VISIBLE);
            }
 
 
@@ -95,25 +101,22 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
             });
 
 
-            btn_fav.setOnClickListener(new View.OnClickListener() {
+          btn_fav.setOnClickListener(new View.OnClickListener() {
+//
+               @Override
+               public void onClick(View v) {
+                   boolean isFavourite = readState();
+                   if (isFavourite) {
+                       btn_fav.setBackgroundResource(R.drawable.ic_favorite_off);
+                       isFavourite = false;
+                       saveState(isFavourite);
 
-                @Override
-                public void onClick(View v) {
+                   } else {
+                       btn_fav.setBackgroundResource(R.drawable.ic_favorite_on);
+                       isFavourite = true;
+                       saveState(isFavourite);
 
-                    if (is_sale_clicked){
-                        btn_fav.setText("Undo");
-                    }
-                    else {
-                        btn_fav.setText("Set For sale");
-                    }
-//                    if (clicked){
-//                        //btn_fav.setBackgroundColor(Color.red(200));
-//                        btn_fav.setText("add to favorites");
-//                    }
-//                    else {
-//                        //btn_fav.setBackgroundColor(Col);
-//                        btn_fav.setText("remove from favorites");
-//                    }
+                   }
                     if (fav_listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
@@ -141,12 +144,14 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
         holder.owner.setText(landDetails.getOwner_name());
         holder.location.setText(landDetails.getLandregion()+"-"+landDetails.getLandarea());
         holder.dimen.setText(landDetails.getLength()+" by "+landDetails.getWidth()+" sq.ft");
-        Glide.with(context)
-                .load(landDetails.getThumbnail())
-                .into(holder.thumbnail);
 
-      //  if (clicked) holder.btn_fav.setEnabled(false);
-      //  else holder.btn_fav.setEnabled(true);
+
+            Glide.with(context)
+                    .load(landDetails.getThumbnail())
+                    .into(holder.thumbnail);
+
+
+
 
 
     }
@@ -157,7 +162,20 @@ public class land_dets_adapter extends RecyclerView.Adapter<land_dets_adapter.My
         return   landInfos.size();
     }
 
+    private void saveState(boolean isFavourite) {
+        SharedPreferences aSharedPreferences = context.getSharedPreferences(
+                "Favourite", Context.MODE_PRIVATE);
+        SharedPreferences.Editor aSharedPreferencesEdit = aSharedPreferences
+                .edit();
+        aSharedPreferencesEdit.putBoolean("State", isFavourite);
+        aSharedPreferencesEdit.commit();
+    }
 
+    private boolean readState() {
+        SharedPreferences aSharedPreferences = context.getSharedPreferences(
+                "Favourite", Context.MODE_PRIVATE);
+        return aSharedPreferences.getBoolean("State", false);
+    }
 
 
 

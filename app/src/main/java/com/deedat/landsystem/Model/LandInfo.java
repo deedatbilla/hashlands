@@ -18,6 +18,18 @@ public LandInfo(){
         this.landarea = landarea;
     }
 
+    public void setLandcode(String landcode) {
+        this.landcode = landcode;
+    }
+
+    public void setOwner_name(String owner_name) {
+        this.owner_name = owner_name;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     public String getLandregion() {
         return landregion;
     }

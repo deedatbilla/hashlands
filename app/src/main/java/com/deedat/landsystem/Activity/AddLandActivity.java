@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -95,6 +98,7 @@ FloatingActionButton fab;
 
 
                                 try {
+                                    saveAsaasecode(asaasecode.getText().toString());
                                     JSONObject location=response.getJSONObject("response");
                                     JSONObject dimens=location.getJSONObject("sizeofLand");
                                     final String landcode=location.getString("landcode");
@@ -112,6 +116,8 @@ FloatingActionButton fab;
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             databaseReference.child(uid).child(landcode).setValue(land_data);
+                                            Intent intent=new Intent(AddLandActivity.this,PropertyActivity.class);
+                                            startActivity(intent);
                                             finish();
                                         }
 
@@ -147,6 +153,16 @@ FloatingActionButton fab;
 
 
     }
+
+    private void saveAsaasecode(String asaase_code) {
+        SharedPreferences aSharedPreferences = this.getSharedPreferences(
+                "asaasecode", Context.MODE_PRIVATE);
+        SharedPreferences.Editor aSharedPreferencesEdit = aSharedPreferences
+                .edit();
+        aSharedPreferencesEdit.putString("code", asaase_code);
+        aSharedPreferencesEdit.commit();
+    }
+
 
 
 

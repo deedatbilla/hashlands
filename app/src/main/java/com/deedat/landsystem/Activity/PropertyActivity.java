@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -20,6 +21,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -58,16 +60,17 @@ public class PropertyActivity extends AppCompatActivity {
 Toolbar toolbar;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
-    DatabaseReference databaseReference,databaseReference_sale,setsale;
+    DatabaseReference databaseReference;
     FloatingActionButton fab;
     private RecyclerView recyclerView;
-    private List<LandInfo> landInfoList;
     private land_dets_adapter mAdapter;
     RelativeLayout relativeLayout;
+    TextView message;
     ProgressBar progressBar;
     ArrayList<LandInfo> my_land_dataArrayList=new ArrayList<>();
     private ProgressDialog progressDialog;
      String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,27 +121,35 @@ Toolbar toolbar;
                     my_land_dataArrayList.add(mld);
 
                 }
-                mAdapter = new land_dets_adapter(PropertyActivity.this, my_land_dataArrayList,false);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PropertyActivity.this);
+                mAdapter = new land_dets_adapter(PropertyActivity.this, my_land_dataArrayList,true);
+//                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(PropertyActivity.this);
+//                recyclerView.setLayoutManager(mLayoutManager);
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(PropertyActivity.this, 2);
                 recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.addItemDecoration(new PropertyActivity.GridSpacingItemDecoration(2, dpToPx(8), true));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
                 mAdapter.notifyDataSetChanged();
                 recyclerView.setAdapter(mAdapter);
                // mAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
-              if(mAdapter.getItemCount()==0){
+              if(my_land_dataArrayList.isEmpty()){
                   relativeLayout.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                }
                 mAdapter.setOnItemClickListener(new land_dets_adapter.onItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
+                        ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(PropertyActivity.this);
+                        Intent intent=new Intent(PropertyActivity.this, mylandsActivity.class);
+                        intent.putExtra("land_data", my_land_dataArrayList.get(position));
+                        startActivity(intent,options.toBundle());
 //
                         //queue.stop();
                     }
                 });
 
-                forsale();
+
 
 
 
@@ -197,120 +208,6 @@ Toolbar toolbar;
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 
-    public void forsale(){
-        final String url="https://hashland.herokuapp.com/setForSale";
-        final RequestQueue queue = Volley.newRequestQueue(this);
 
-        mAdapter.onfavoriteClick(new land_dets_adapter.onfavoriteClickListener() {
-
-            @Override
-
-            public void onfavClick(final int position) {
-                // Intent intent=new Intent(PropertyActivity.this,LandInfo.class);
-//                        intent.putExtra("article_data", .get(position));
-//                        startActivity(intent);
-                progressDialog.setMessage("loading.. please wait,");
-                progressDialog.show();
-                progressDialog.setCanceledOnTouchOutside(false);
-                databaseReference_sale=database.getReference("LandsForSale");
-                setsale=database.getReference("myland_linked_to_account");
-                landInfoList=new ArrayList<>();
-
-                int year;
-                int month;
-                int dayOfMonth;
-                Calendar calendar;
-                calendar = Calendar.getInstance();
-                year = calendar.get(Calendar.YEAR);
-                month = calendar.get(Calendar.MONTH);
-                dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-                final String current_date=  dayOfMonth + "/" + (month + 1) + "/" + year;
-                Date date = new Date();
-                String strDateFormat = "hh:mm:ss a";
-                DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
-                final String formattedDate= dateFormat.format(date);
-                final String landcode=my_land_dataArrayList.get(position).getLandcode();
-                final HashMap<String, String> params = new HashMap<String,String>();
-                final HashMap<String, String> params2 = new HashMap<String,String>();
-
-
-
-                params.put("landid",landcode);
-                params.put("date",current_date);
-                params.put("time",formattedDate);
-
-//                      databaseReference.child(landcode).addListenerForSingleValueEvent(new ValueEventListener() {
-//                          @Override
-//                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                              if(dataSnapshot.child(my_land_dataArrayList.get(position).getLandcode()).exists()){
-//                                  mAdapter.is_sale_clicked=true;
-//                                  Toast.makeText(PropertyActivity.this,"exists",Toast.LENGTH_SHORT).show();
-//                              }
-//
-//
-//                          }
-//
-//                          @Override
-//                          public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                          }
-//                      });
-                JsonObjectRequest jsObjRequest = new
-                        JsonObjectRequest(Request.Method.POST,
-                        url,
-                        new JSONObject(params),
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(final JSONObject response) {
-
-                                setsale.child(uid).addValueEventListener(new ValueEventListener() {
-
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            landInfoList.clear();
-                                            LandInfo landInfo = snapshot.getValue(LandInfo.class);
-                                            landInfoList.add(landInfo);
-//                                            params2.put("landid",landcode);
-//                                            params2.put("date",current_date);
-//                                            params2.put("time",formattedDate);
-//                                            params2.put("landarea",landInfo.getLandarea());
-//                                            params2.put("landregion",landInfo.getLandregion());
-//                                            params2.put("length",landInfo.getLength());
-//                                            params2.put("thumbnail",landInfo.getThumbnail());
-//                                            params2.put("width",landInfo.getWidth());
-
-
-                                        }
-//                                        databaseReference_sale.child(landcode).child("record").setValue(params);
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
-                                Toast.makeText(PropertyActivity.this,"land has been set for sale",Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
-
-
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
-                        Log.v("api_error",String.valueOf(landInfoList.size()));
-                        Log.v("mydatalist",params2.toString());
-                        //Toast.makeText(AddLandActivity.this,"security code or asaasecode not valid",Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                queue.add(jsObjRequest);
-            }
-        });
-
-
-    }
 
 }
